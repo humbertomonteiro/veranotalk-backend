@@ -1,0 +1,56 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ParticipantService = void 0;
+const errors_1 = require("../../../utils/errors");
+class ParticipantService {
+    constructor(participantRepository) {
+        this.participantRepository = participantRepository;
+    }
+    async getParticipantByDocument(document) {
+        if (!document) {
+            throw new errors_1.ValidationError("CPF é obrigatório");
+        }
+        const participant = await this.participantRepository.findByDocument(document);
+        if (!participant) {
+            throw new errors_1.NotFoundError("Participante não encontrado");
+        }
+        return participant;
+    }
+    async validateQRCode(participantId, qrCode) {
+        if (!participantId || !qrCode) {
+            throw new errors_1.ValidationError("participantId e qrCode são obrigatórios");
+        }
+        const participant = await this.participantRepository.findById(participantId);
+        if (!participant) {
+            throw new errors_1.NotFoundError("Participante não encontrado");
+        }
+        if (!participant.qrCode || participant.qrCode !== qrCode) {
+            throw new errors_1.ValidationError("QR Code inválido");
+        }
+        if (participant.checkedIn) {
+            throw new errors_1.ValidationError("Participante já fez check-in");
+        }
+        participant.checkIn();
+        await this.participantRepository.update(participant);
+        return true;
+    }
+    async getCertificate(participantId) {
+        if (!participantId) {
+            throw new errors_1.ValidationError("participantId é obrigatório");
+        }
+        const participant = await this.participantRepository.findById(participantId);
+        if (!participant) {
+            throw new errors_1.NotFoundError("Participante não encontrado");
+        }
+        const eventDate = new Date("2025-07-29");
+        const today = new Date();
+        const certificateAvailable = today > eventDate;
+        if (!certificateAvailable) {
+            return { available: false };
+        }
+        const certificateUrl = `https://storage.googleapis.com/veranotalk-certificates/${participantId}.pdf`;
+        return { available: true, url: certificateUrl };
+    }
+}
+exports.ParticipantService = ParticipantService;
+//# sourceMappingURL=Participant.service.js.map

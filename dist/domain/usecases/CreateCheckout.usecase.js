@@ -26,6 +26,8 @@ class CreateCheckoutUseCase {
             for (const participant of participants) {
                 const participantId = await this.participantRepository.save(participant);
                 participantIds.push(participantId);
+                participant.generateQrCode();
+                await this.participantRepository.update(participant);
             }
             // 3. Criar checkout
             const checkoutProps = {

@@ -1,15 +1,9 @@
-import {
-  ParticipantRepository,
-  CheckoutRepository,
-} from "../../../domain/interfaces/repositories";
-import { Participant, Checkout } from "../../../domain/entities";
+import { ParticipantRepository } from "../../../domain/interfaces/repositories";
+import { Participant } from "../../../domain/entities";
 import { NotFoundError, ValidationError } from "../../../utils/errors";
 
 export class ParticipantService {
-  constructor(
-    private participantRepository: ParticipantRepository,
-    private checkoutRepository: CheckoutRepository
-  ) {}
+  constructor(private participantRepository: ParticipantRepository) {}
 
   async getParticipantByDocument(document: string): Promise<Participant> {
     if (!document) {
