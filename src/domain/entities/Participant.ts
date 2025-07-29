@@ -152,10 +152,10 @@ export class Participant {
   }
 
   public generateQrCode(): void {
-    if (!this.id) {
+    if (!this.document) {
       throw new ParticipantError("ID é necessário para gerar QR Code");
     }
-    this.props.qrCode = `PART-${this.id}-${crypto
+    this.props.qrCode = `PART-${this.document}-${crypto
       .randomUUID()
       .substring(0, 8)}`;
     this.props.updatedAt = new Date();
