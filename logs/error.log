@@ -1,0 +1,8 @@
+{"level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 18:17:09"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 18:17:09"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 18:36:47"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 18:36:47"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 19:11:50"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 19:11:50"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-29 01:21:20"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-29 01:21:20"}

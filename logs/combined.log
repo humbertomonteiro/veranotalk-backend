@@ -1,0 +1,61 @@
+{"action":"payment.created","level":"info","mercadoPagoId":"1324192828","message":"Processando webhook","timestamp":"2025-07-26 18:17:05"}
+{"level":"info","mercadoPagoId":"1324192828","message":"Status do pagamento obtido","status":"approved","timestamp":"2025-07-26 18:17:05"}
+{"attempt":1,"level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:17:06"}
+{"attempt":2,"level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:17:07"}
+{"attempt":3,"level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:17:08"}
+{"level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 18:17:09"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 18:17:09"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324192894","message":"Processando webhook","timestamp":"2025-07-26 18:35:09"}
+{"externalReference":"RFXZC2R4iTynsVyf4mU3","level":"info","mercadoPagoId":"1324192894","message":"Status do pagamento obtido","status":"approved","timestamp":"2025-07-26 18:35:09"}
+{"checkoutId":"RFXZC2R4iTynsVyf4mU3","externalReference":"RFXZC2R4iTynsVyf4mU3","level":"info","mercadoPagoId":"1324192894","message":"Checkout encontrado","timestamp":"2025-07-26 18:35:10"}
+{"checkoutId":"RFXZC2R4iTynsVyf4mU3","level":"info","mercadoPagoId":"1324192894","message":"Checkout atualizado","status":"approved","timestamp":"2025-07-26 18:35:11"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324192828","message":"Processando webhook","timestamp":"2025-07-26 18:36:43"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"info","mercadoPagoId":"1324192828","message":"Status do pagamento obtido","status":"approved","timestamp":"2025-07-26 18:36:43"}
+{"attempt":1,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:36:43"}
+{"attempt":2,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:36:45"}
+{"attempt":3,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 18:36:46"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 18:36:47"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 18:36:47"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1339787717","message":"Processando webhook","timestamp":"2025-07-26 18:57:37"}
+{"externalReference":"4SgzVQtflEJLuRla7lK4","level":"info","mercadoPagoId":"1339787717","message":"Status do pagamento obtido","paymentMethodId":"visa","status":"approved","timestamp":"2025-07-26 18:57:38"}
+{"checkoutId":"4SgzVQtflEJLuRla7lK4","externalReference":"4SgzVQtflEJLuRla7lK4","level":"info","mercadoPagoId":"1339787717","message":"Checkout encontrado","paymentMethod":"credit_card","timestamp":"2025-07-26 18:57:38"}
+{"checkoutId":"4SgzVQtflEJLuRla7lK4","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-07-26 18:57:38"}
+{"checkoutId":"4SgzVQtflEJLuRla7lK4","level":"info","mercadoPagoId":"1339787717","message":"Checkout atualizado","paymentMethod":"credit_card","status":"approved","timestamp":"2025-07-26 18:57:38"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324192828","message":"Processando webhook","timestamp":"2025-07-26 19:11:47"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"info","mercadoPagoId":"1324192828","message":"Status do pagamento obtido","paymentMethodId":"visa","status":"approved","timestamp":"2025-07-26 19:11:47"}
+{"attempt":1,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 19:11:47"}
+{"attempt":2,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 19:11:48"}
+{"attempt":3,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-26 19:11:49"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-26 19:11:50"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-26 19:11:50"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1339796769","message":"Processando webhook","timestamp":"2025-07-27 16:08:43"}
+{"externalReference":"19PJQe91mN1LLZjNK67o","level":"info","mercadoPagoId":"1339796769","message":"Status do pagamento obtido","payerDocument":"32659430","payerName":"Desconhecido","paymentMethodId":"master","status":"approved","timestamp":"2025-07-27 16:08:44"}
+{"checkoutId":"19PJQe91mN1LLZjNK67o","externalReference":"19PJQe91mN1LLZjNK67o","level":"info","mercadoPagoId":"1339796769","message":"Checkout encontrado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","timestamp":"2025-07-27 16:08:44"}
+{"checkoutId":"19PJQe91mN1LLZjNK67o","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-07-27 16:08:44"}
+{"checkoutId":"19PJQe91mN1LLZjNK67o","level":"info","message":"Checkout atualizado com payer","payerDocument":"32659430","payerName":"Desconhecido","timestamp":"2025-07-27 16:08:44"}
+{"checkoutId":"19PJQe91mN1LLZjNK67o","level":"info","mercadoPagoId":"1339796769","message":"Checkout atualizado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","status":"approved","timestamp":"2025-07-27 16:08:44"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324201176","message":"Processando webhook","timestamp":"2025-07-27 20:29:03"}
+{"externalReference":"6tzk02ab5xNdNJRCNXh4","level":"info","mercadoPagoId":"1324201176","message":"Status do pagamento obtido","payerDocument":"32659430","payerName":"Desconhecido","paymentMethodId":"visa","status":"approved","timestamp":"2025-07-27 20:29:04"}
+{"checkoutId":"6tzk02ab5xNdNJRCNXh4","externalReference":"6tzk02ab5xNdNJRCNXh4","level":"info","mercadoPagoId":"1324201176","message":"Checkout encontrado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","timestamp":"2025-07-27 20:29:04"}
+{"checkoutId":"6tzk02ab5xNdNJRCNXh4","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-07-27 20:29:04"}
+{"checkoutId":"6tzk02ab5xNdNJRCNXh4","level":"info","message":"Checkout atualizado com payer","payerDocument":"32659430","payerName":"Desconhecido","timestamp":"2025-07-27 20:29:04"}
+{"checkoutId":"6tzk02ab5xNdNJRCNXh4","level":"info","mercadoPagoId":"1324201176","message":"Checkout atualizado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","status":"approved","timestamp":"2025-07-27 20:29:04"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324199450","message":"Processando webhook","timestamp":"2025-07-27 20:41:14"}
+{"externalReference":"HLcuf0O36VU6AjSB3KUY","level":"info","mercadoPagoId":"1324199450","message":"Status do pagamento obtido","payerDocument":"32659430","payerName":"Desconhecido","paymentMethodId":"master","status":"approved","timestamp":"2025-07-27 20:41:15"}
+{"checkoutId":"HLcuf0O36VU6AjSB3KUY","externalReference":"HLcuf0O36VU6AjSB3KUY","level":"info","mercadoPagoId":"1324199450","message":"Checkout encontrado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","timestamp":"2025-07-27 20:41:15"}
+{"checkoutId":"HLcuf0O36VU6AjSB3KUY","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-07-27 20:41:15"}
+{"checkoutId":"HLcuf0O36VU6AjSB3KUY","level":"info","message":"Checkout atualizado com payer","payerDocument":"32659430","payerName":"Desconhecido","timestamp":"2025-07-27 20:41:15"}
+{"checkoutId":"HLcuf0O36VU6AjSB3KUY","level":"info","mercadoPagoId":"1324199450","message":"Checkout atualizado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","status":"approved","timestamp":"2025-07-27 20:41:15"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324192828","message":"Processando webhook","timestamp":"2025-07-29 01:21:16"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"info","mercadoPagoId":"1324192828","message":"Status do pagamento obtido","payerDocument":"32659430","payerName":"Desconhecido","paymentMethodId":"visa","status":"approved","timestamp":"2025-07-29 01:21:16"}
+{"attempt":1,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-29 01:21:17"}
+{"attempt":2,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-29 01:21:18"}
+{"attempt":3,"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"warn","mercadoPagoId":"1324192828","message":"Checkout não encontrado, retrying","timestamp":"2025-07-29 01:21:19"}
+{"externalReference":"VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-07-29 01:21:20"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324192828, externalReference: VqtbkYNspVD2s2KMUCV8","level":"error","mercadoPagoId":"1324192828","message":"Erro ao processar webhook","timestamp":"2025-07-29 01:21:20"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324227120","message":"Processando webhook","timestamp":"2025-07-29 10:01:18"}
+{"externalReference":"cHPawjRGwSiXm7FYSm7t","level":"info","mercadoPagoId":"1324227120","message":"Status do pagamento obtido","payerDocument":"32659430","payerName":"Desconhecido","paymentMethodId":"master","status":"approved","timestamp":"2025-07-29 10:01:18"}
+{"checkoutId":"cHPawjRGwSiXm7FYSm7t","externalReference":"cHPawjRGwSiXm7FYSm7t","level":"info","mercadoPagoId":"1324227120","message":"Checkout encontrado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","timestamp":"2025-07-29 10:01:19"}
+{"checkoutId":"cHPawjRGwSiXm7FYSm7t","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-07-29 10:01:19"}
+{"checkoutId":"cHPawjRGwSiXm7FYSm7t","level":"info","message":"Checkout atualizado com payer","payerDocument":"32659430","payerName":"Desconhecido","timestamp":"2025-07-29 10:01:19"}
+{"checkoutId":"cHPawjRGwSiXm7FYSm7t","level":"info","mercadoPagoId":"1324227120","message":"Checkout atualizado","payerDocument":"32659430","payerName":"Desconhecido","paymentMethod":"credit_card","status":"approved","timestamp":"2025-07-29 10:01:19"}
