@@ -1,34 +1,17 @@
 import { Request, Response } from "express";
 import { CheckoutService } from "../services/Checkout.service";
-import { FirebaseCheckoutRepository } from "../../repositories";
 import {
   CreateCheckoutInput,
-  WebhookMercadoPagoUseCase,
   WebhookMercadoPagoInput,
 } from "../../../domain/usecases";
-import { FirebaseParticipantRepository } from "../../repositories";
 
 export class CheckoutController {
-  private readonly checkoutRepository: FirebaseCheckoutRepository;
-  private readonly webhookUseCase: WebhookMercadoPagoUseCase;
-
-  constructor(
-    private readonly checkoutService: CheckoutService,
-    checkoutRepository: FirebaseCheckoutRepository,
-    participantRepository: FirebaseParticipantRepository
-  ) {
-    this.checkoutRepository = checkoutRepository;
-    this.webhookUseCase = new WebhookMercadoPagoUseCase(
-      checkoutRepository,
-      participantRepository
-    );
-  }
+  constructor(private readonly checkoutService: CheckoutService) {}
 
   async createCheckout(req: Request, res: Response): Promise<void> {
     try {
       const input: CreateCheckoutInput = req.body;
 
-      // Validação básica
       if (!input.participants || !input.checkout) {
         res.status(400).json({
           error: "Dados de participantes e checkout são obrigatórios",
@@ -48,7 +31,7 @@ export class CheckoutController {
   async handleWebhook(req: Request, res: Response): Promise<void> {
     try {
       const input: WebhookMercadoPagoInput = req.body;
-      await this.webhookUseCase.execute(input);
+      await this.checkoutService.handleWebhook(input);
       res.status(200).send("OK");
     } catch (error) {
       console.error("Erro ao processar webhook:", error);
@@ -62,15 +45,20 @@ export class CheckoutController {
   async getCheckoutById(req: Request, res: Response): Promise<void> {
     try {
       const checkoutId = req.params.id;
-      const checkout = await this.checkoutRepository.findById(checkoutId);
-      if (!checkout) {
-        res.status(404).json({ error: "Checkout não encontrado" });
-        return;
-      }
+      const checkout = await this.checkoutService.getCheckoutById(checkoutId);
       res.status(200).json(checkout);
     } catch (error) {
       console.error("Erro ao buscar checkout:", error);
-      res.status(500).json({ error: "Erro ao buscar checkout" });
+      res
+        .status(
+          error instanceof Error && error.message.includes("não encontrado")
+            ? 404
+            : 500
+        )
+        .json({
+          error:
+            error instanceof Error ? error.message : "Erro ao buscar checkout",
+        });
     }
   }
 }

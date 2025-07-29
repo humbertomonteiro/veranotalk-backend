@@ -58,6 +58,9 @@ class CreateCheckoutUseCase {
           participant
         );
         participantIds.push(participantId);
+
+        participant.generateQrCode();
+        await this.participantRepository.update(participant);
       }
 
       // 3. Criar checkout
