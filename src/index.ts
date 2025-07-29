@@ -34,6 +34,9 @@ app.post("/checkout", (req: Request, res: Response) =>
 app.post("/webhook/mercadopago", (req: Request, res: Response) =>
   checkoutController.handleWebhook(req, res)
 );
+app.get("/checkout/:id", (req: Request, res: Response) =>
+  checkoutController.getCheckoutById(req, res)
+);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -58,4 +58,19 @@ export class CheckoutController {
       });
     }
   }
+
+  async getCheckoutById(req: Request, res: Response): Promise<void> {
+    try {
+      const checkoutId = req.params.id;
+      const checkout = await this.checkoutRepository.findById(checkoutId);
+      if (!checkout) {
+        res.status(404).json({ error: "Checkout não encontrado" });
+        return;
+      }
+      res.status(200).json(checkout);
+    } catch (error) {
+      console.error("Erro ao buscar checkout:", error);
+      res.status(500).json({ error: "Erro ao buscar checkout" });
+    }
+  }
 }

@@ -24,6 +24,7 @@ const checkoutController = new Checkout_controller_1.CheckoutController(checkout
 // Rotas
 app.post("/checkout", (req, res) => checkoutController.createCheckout(req, res));
 app.post("/webhook/mercadopago", (req, res) => checkoutController.handleWebhook(req, res));
+app.get("/checkout/:id", (req, res) => checkoutController.getCheckoutById(req, res));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

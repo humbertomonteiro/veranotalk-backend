@@ -11,6 +11,7 @@ import {
   ParticipantRepository,
 } from "../interfaces/repositories";
 import { config } from "dotenv";
+import { success } from "zod";
 config();
 
 // Configuração do cliente do Mercado Pago
@@ -31,7 +32,7 @@ interface CreateCheckoutOutput {
   checkoutId: string;
   paymentUrl: string;
   status: CheckoutStatus;
-  dataCheckout: CreateCheckoutInput;
+  dataCheckout: Checkout;
 }
 
 class CreateCheckoutUseCase {
@@ -95,7 +96,7 @@ class CreateCheckoutUseCase {
           },
         ],
         payer: {
-          email: participants[0]?.email || "no-reply@seu-dominio.com",
+          email: participants[0]?.email || "no-reply@veranotalk.com",
         },
         external_reference: checkoutId,
         back_urls: {
@@ -135,7 +136,7 @@ class CreateCheckoutUseCase {
         checkoutId,
         paymentUrl: preferenceResponse.init_point,
         status: checkout.status,
-        dataCheckout: input,
+        dataCheckout: checkout,
       };
     } catch (error) {
       console.error("Erro no CreateCheckoutUseCase:", error);

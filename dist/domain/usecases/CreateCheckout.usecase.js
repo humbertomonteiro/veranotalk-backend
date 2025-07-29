@@ -57,7 +57,7 @@ class CreateCheckoutUseCase {
                     },
                 ],
                 payer: {
-                    email: participants[0]?.email || "no-reply@seu-dominio.com",
+                    email: participants[0]?.email || "no-reply@veranotalk.com",
                 },
                 external_reference: checkoutId,
                 back_urls: {
@@ -85,7 +85,7 @@ class CreateCheckoutUseCase {
                 checkoutId,
                 paymentUrl: preferenceResponse.init_point,
                 status: checkout.status,
-                dataCheckout: input,
+                dataCheckout: checkout,
             };
         }
         catch (error) {
