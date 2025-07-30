@@ -122,10 +122,6 @@ export class Participant {
     return this.props.ticketType;
   }
 
-  // get isHalfPrice(): boolean {
-  //   return this.props.isHalfPrice;
-  // }
-
   get qrCode(): string | undefined {
     return this.props.qrCode;
   }
@@ -162,17 +158,20 @@ export class Participant {
   }
 
   // Método para serialização segura
-  public toDTO(): ParticipantDTO {
+  public toDTO(): ParticipantProps {
     return {
       id: this.id,
+      checkoutId: this.checkoutId,
       name: this.name,
       email: this.email,
       phone: this.phone,
+      eventId: this.eventId,
       document: this.document,
       ticketType: this.ticketType,
-      // isHalfPrice: this.isHalfPrice,
       checkedIn: this.checkedIn,
-      qrCode: this.qrCode ? "••••-••••" : undefined,
+      qrCode: this.qrCode,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

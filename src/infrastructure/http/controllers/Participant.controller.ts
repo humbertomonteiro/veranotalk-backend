@@ -8,11 +8,40 @@ export class ParticipantController {
   async getParticipantByDocument(req: Request, res: Response): Promise<void> {
     try {
       const document = req.params.document;
-      const data = await this.participantService.getParticipantByDocument(
-        document
-      );
-      res.status(200).json(data);
+      console.log(`Buscando participante com documento: ${document}`);
+      const { participant, checkout } =
+        await this.participantService.getParticipantByDocument(document);
+      res.status(200).json({
+        participant: {
+          id: participant.id,
+          name: participant.name,
+          email: participant.email,
+          phone: participant.phone,
+          document: participant.document,
+          ticketType: participant.ticketType,
+          checkedIn: participant.checkedIn,
+          qrCode: participant.qrCode,
+          eventId: participant.eventId,
+        },
+        checkout: checkout
+          ? {
+              id: checkout.id,
+              status: checkout.status,
+              totalAmount: checkout.totalAmount,
+              metadata: checkout.metadata,
+              createdAt:
+                checkout.createdAt && !isNaN(checkout.createdAt.getTime())
+                  ? checkout.createdAt.toISOString()
+                  : new Date().toISOString(),
+              updatedAt:
+                checkout.updatedAt && !isNaN(checkout.updatedAt.getTime())
+                  ? checkout.updatedAt.toISOString()
+                  : new Date().toISOString(),
+            }
+          : null,
+      });
     } catch (error) {
+      console.error("Erro ao buscar participante por documento:", error);
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ error: error.message });
       } else {

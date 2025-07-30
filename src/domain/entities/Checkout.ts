@@ -18,7 +18,7 @@ export interface CheckoutProps {
   status: CheckoutStatus;
   // orderId?: string;
   paymentMethod?: string | null;
-  payer?: Payer;
+  payer?: Payer | null;
   mercadoPagoId?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
@@ -177,28 +177,19 @@ export class Checkout {
   }
 
   // Serialização segura
-  public toDTO(): CheckoutDTO {
-    const metadata: CheckoutDTO["metadata"] = {
-      retryCount: this.metadata.retryCount,
-      participantIds: this.metadata.participantIds,
-      eventId: this.metadata.eventId,
-    };
-    // Só incluir metadata.error se não for undefined
-    if (this.metadata.error) {
-      metadata.error = "Erro no processamento";
-    }
-
+  public toDTO(): CheckoutProps {
     return {
       id: this.id,
       status: this.status,
       totalAmount: this.totalAmount,
-      // orderId: this.orderId || "",
-      paymentMethod: this.paymentMethod || "",
-      payer: this.payer || { name: "", document: "" },
+      paymentMethod: this.paymentMethod,
+      payer: this.payer,
       mercadoPagoId: this.mercadoPagoId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      metadata,
+      metadata: this.metadata.error
+        ? { ...this.metadata, error: "Erro no processamento" }
+        : this.metadata,
     };
   }
 }

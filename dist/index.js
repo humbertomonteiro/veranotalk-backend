@@ -24,7 +24,7 @@ const createCheckoutUseCase = new usecases_1.CreateCheckoutUseCase(checkoutRepos
 const webhookUseCase = new usecases_1.WebhookMercadoPagoUseCase(checkoutRepository, participantRepository);
 const checkoutService = new Checkout_service_1.CheckoutService(createCheckoutUseCase, webhookUseCase, checkoutRepository);
 const checkoutController = new Checkout_controller_1.CheckoutController(checkoutService);
-const participantService = new Participant_service_1.ParticipantService(participantRepository);
+const participantService = new Participant_service_1.ParticipantService(participantRepository, checkoutRepository);
 const participantController = new Participant_controller_1.ParticipantController(participantService);
 // Rotas
 app.post("/checkout", (req, res) => checkoutController.createCheckout(req, res));

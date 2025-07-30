@@ -51,7 +51,7 @@ class FirebaseCheckoutRepository implements CheckoutRepository {
     // Remover campos undefined recursivamente, incluindo id
     const cleanedDTO = removeUndefinedFields({
       ...checkoutDTO,
-      id: undefined, // Forçar exclusão do campo id
+      id: undefined,
     });
 
     const docRef = checkout.id
@@ -60,8 +60,8 @@ class FirebaseCheckoutRepository implements CheckoutRepository {
 
     await setDoc(docRef, {
       ...cleanedDTO,
-      createdAt: checkoutDTO.createdAt.toISOString(),
-      updatedAt: checkoutDTO.updatedAt.toISOString(),
+      // createdAt: checkoutDTO.createdAt.toISOString(),
+      // updatedAt: checkoutDTO.updatedAt.toISOString(),
     });
 
     return docRef.id;
@@ -152,11 +152,11 @@ class FirebaseCheckoutRepository implements CheckoutRepository {
     if (!checkout.id) throw new Error("Checkout ID is required for update");
     const checkoutDTO = checkout.toDTO();
     const docRef = doc(db, this.collectionName, checkout.id);
-    await updateDoc(docRef, {
-      ...checkoutDTO,
-      createdAt: checkoutDTO.createdAt.toISOString(),
-      updatedAt: checkoutDTO.updatedAt.toISOString(),
-    });
+    // await updateDoc(docRef, {
+    //   ...checkoutDTO,
+    //   createdAt: checkoutDTO.createdAt.toISOString(),
+    //   updatedAt: checkoutDTO.updatedAt.toISOString(),
+    // });
   }
 
   async delete(id: string): Promise<void> {

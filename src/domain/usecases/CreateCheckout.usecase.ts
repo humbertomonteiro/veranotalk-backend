@@ -10,11 +10,10 @@ import {
   CheckoutRepository,
   ParticipantRepository,
 } from "../interfaces/repositories";
+import { InternalServerError, ValidationError } from "../../utils/errors";
 import { config } from "dotenv";
-import { success } from "zod";
 config();
 
-// Configuração do cliente do Mercado Pago
 const mercadoPagoClient = new MercadoPagoConfig({
   accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "SUA_CHAVE_AQUI",
 });
@@ -32,10 +31,10 @@ interface CreateCheckoutOutput {
   checkoutId: string;
   paymentUrl: string;
   status: CheckoutStatus;
-  dataCheckout: Checkout;
+  dataCheckout: CheckoutProps;
 }
 
-class CreateCheckoutUseCase {
+export class CreateCheckoutUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
     private participantRepository: ParticipantRepository
@@ -46,53 +45,58 @@ class CreateCheckoutUseCase {
     let checkoutId: string | undefined;
 
     try {
-      // 1. Criar e validar participantes
-      const participants = input.participants.map(
-        (props) => new Participant(props)
-      );
-      const participantIds: string[] = [];
-
-      // 2. Salvar participantes
-      for (const participant of participants) {
-        const participantId = await this.participantRepository.save(
-          participant
-        );
-        participantIds.push(participantId);
-
-        participant.generateQrCode();
-        await this.participantRepository.update(participant);
+      if (!input.participants.length) {
+        throw new ValidationError("Pelo menos um participante é obrigatório");
       }
 
-      // 3. Criar checkout
+      // Criar checkout primeiro
       const checkoutProps: CheckoutProps = {
         ...input.checkout,
         status: "pending",
         metadata: {
-          participantIds,
-          eventId: input.checkout.metadata?.eventId,
+          participantIds: [],
+          eventId: input.checkout.metadata?.eventId || "verano-talk",
         },
       };
       checkout = new Checkout(checkoutProps);
-
-      // 4. Salvar checkout
       checkoutId = await this.checkoutRepository.save(checkout);
       console.log(`Checkout salvo com ID: ${checkoutId}`);
 
-      // Atualizar o checkout com o ID gerado
+      // Atualizar checkout com ID
       checkout = new Checkout({ ...checkoutProps, id: checkoutId });
 
-      // 5. Iniciar processamento
+      // Criar e salvar participantes com checkoutId
+      const participants = input.participants.map(
+        (props) =>
+          new Participant({
+            ...props,
+            eventId: props.eventId || "verano-talk",
+            checkoutId: checkoutId || "", // Atribuir checkoutId diretamente
+          })
+      );
+      const participantIds: string[] = [];
+
+      for (const participant of participants) {
+        participant.generateQrCode();
+        const participantId = await this.participantRepository.save(
+          participant
+        );
+        participantIds.push(participantId);
+      }
+
+      // Atualizar checkout com participantIds
+      checkout.addParticipants(participantIds);
       checkout.startProcessing();
       await this.checkoutRepository.update(checkout);
       console.log(`Checkout atualizado para processing: ${checkoutId}`);
 
-      // 6. Criar preferência de pagamento no Mercado Pago
+      // Criar preferência de pagamento no Mercado Pago
       const preference = {
         items: [
           {
             id: `item-${checkoutId}`,
             title: `Ingressos para evento ${
-              input.checkout.metadata?.eventId || "desconhecido"
+              input.checkout.metadata?.eventId || "event-1018"
             }`,
             unit_price: checkout.totalAmount,
             quantity: 1,
@@ -104,8 +108,6 @@ class CreateCheckoutUseCase {
         external_reference: checkoutId,
         back_urls: {
           success: "https://veranotalk.com.br/success",
-          //   failure: "https://sua-landing-page.com/failure",
-          //   pending: "https://sua-landing-page.com/pending",
         },
         auto_return: "approved" as "approved",
       };
@@ -114,21 +116,20 @@ class CreateCheckoutUseCase {
         body: preference,
       });
 
-      // Verificar se init_point e id estão presentes
       if (!preferenceResponse.init_point || !preferenceResponse.id) {
         console.error("Resposta do Mercado Pago inválida:", preferenceResponse);
         checkout.fail(
-          new Error(
+          new InternalServerError(
             "Resposta do Mercado Pago inválida: init_point ou id ausente"
           )
         );
         await this.checkoutRepository.update(checkout);
-        throw new Error(
+        throw new InternalServerError(
           "Resposta do Mercado Pago inválida: init_point ou id ausente"
         );
       }
 
-      // 7. Atualizar checkout com Mercado Pago ID
+      // Atualizar checkout com Mercado Pago ID
       checkout.setMercadoPagoId(preferenceResponse.id);
       await this.checkoutRepository.update(checkout);
       console.log(
@@ -139,23 +140,24 @@ class CreateCheckoutUseCase {
         checkoutId,
         paymentUrl: preferenceResponse.init_point,
         status: checkout.status,
-        dataCheckout: checkout,
+        dataCheckout: checkout.toDTO(),
       };
     } catch (error) {
       console.error("Erro no CreateCheckoutUseCase:", error);
       if (checkout && checkoutId) {
-        // Atualizar o checkout existente com status failed
         checkout.fail(
-          new Error(
-            error instanceof Error ? error.message : "Erro desconhecido"
-          )
+          error instanceof Error
+            ? error
+            : new InternalServerError("Erro desconhecido")
         );
         await this.checkoutRepository.update(checkout);
         console.log(`Checkout atualizado para failed: ${checkoutId}`);
       }
-      throw new Error(`Falha ao criar checkout: ${error}`);
+      throw error instanceof Error
+        ? error
+        : new InternalServerError("Falha ao criar checkout");
     }
   }
 }
 
-export { CreateCheckoutUseCase, CreateCheckoutInput, CreateCheckoutOutput };
+export { CreateCheckoutInput, CreateCheckoutOutput };

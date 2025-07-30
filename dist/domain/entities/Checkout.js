@@ -119,26 +119,18 @@ class Checkout {
     }
     // Serialização segura
     toDTO() {
-        const metadata = {
-            retryCount: this.metadata.retryCount,
-            participantIds: this.metadata.participantIds,
-            eventId: this.metadata.eventId,
-        };
-        // Só incluir metadata.error se não for undefined
-        if (this.metadata.error) {
-            metadata.error = "Erro no processamento";
-        }
         return {
             id: this.id,
             status: this.status,
             totalAmount: this.totalAmount,
-            // orderId: this.orderId || "",
-            paymentMethod: this.paymentMethod || "",
-            payer: this.payer || { name: "", document: "" },
+            paymentMethod: this.paymentMethod,
+            payer: this.payer,
             mercadoPagoId: this.mercadoPagoId,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
-            metadata,
+            metadata: this.metadata.error
+                ? { ...this.metadata, error: "Erro no processamento" }
+                : this.metadata,
         };
     }
 }

@@ -3,8 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParticipantService = void 0;
 const errors_1 = require("../../../utils/errors");
 class ParticipantService {
-    constructor(participantRepository) {
+    constructor(participantRepository, checkoutRepository) {
         this.participantRepository = participantRepository;
+        this.checkoutRepository = checkoutRepository;
     }
     async getParticipantByDocument(document) {
         if (!document) {
@@ -14,7 +15,11 @@ class ParticipantService {
         if (!participant) {
             throw new errors_1.NotFoundError("Participante não encontrado");
         }
-        return participant;
+        let checkout = null;
+        if (participant.checkoutId) {
+            checkout = await this.checkoutRepository.findById(participant.checkoutId);
+        }
+        return { participant, checkout };
     }
     async validateQRCode(participantId, qrCode) {
         if (!participantId || !qrCode) {
@@ -41,6 +46,13 @@ class ParticipantService {
         const participant = await this.participantRepository.findById(participantId);
         if (!participant) {
             throw new errors_1.NotFoundError("Participante não encontrado");
+        }
+        if (!participant.checkoutId) {
+            return { available: false };
+        }
+        const checkout = await this.checkoutRepository.findById(participant.checkoutId);
+        if (!checkout || checkout.status !== "approved") {
+            return { available: false };
         }
         const eventDate = new Date("2025-07-29");
         const today = new Date();

@@ -35,7 +35,10 @@ const checkoutService = new CheckoutService(
   checkoutRepository
 );
 const checkoutController = new CheckoutController(checkoutService);
-const participantService = new ParticipantService(participantRepository);
+const participantService = new ParticipantService(
+  participantRepository,
+  checkoutRepository
+);
 const participantController = new ParticipantController(participantService);
 
 // Rotas

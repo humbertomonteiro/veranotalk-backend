@@ -1,11 +1,24 @@
-import { ParticipantRepository } from "../../../domain/interfaces/repositories";
-import { Participant } from "../../../domain/entities";
+import {
+  ParticipantRepository,
+  CheckoutRepository,
+} from "../../../domain/interfaces/repositories";
+import { Participant, Checkout } from "../../../domain/entities";
 import { NotFoundError, ValidationError } from "../../../utils/errors";
 
-export class ParticipantService {
-  constructor(private participantRepository: ParticipantRepository) {}
+interface ParticipantWithCheckout {
+  participant: Participant;
+  checkout: Checkout | null;
+}
 
-  async getParticipantByDocument(document: string): Promise<Participant> {
+export class ParticipantService {
+  constructor(
+    private participantRepository: ParticipantRepository,
+    private checkoutRepository: CheckoutRepository
+  ) {}
+
+  async getParticipantByDocument(
+    document: string
+  ): Promise<ParticipantWithCheckout> {
     if (!document) {
       throw new ValidationError("CPF é obrigatório");
     }
@@ -17,7 +30,12 @@ export class ParticipantService {
       throw new NotFoundError("Participante não encontrado");
     }
 
-    return participant;
+    let checkout: Checkout | null = null;
+    if (participant.checkoutId) {
+      checkout = await this.checkoutRepository.findById(participant.checkoutId);
+    }
+
+    return { participant, checkout };
   }
 
   async validateQRCode(
@@ -60,6 +78,17 @@ export class ParticipantService {
     );
     if (!participant) {
       throw new NotFoundError("Participante não encontrado");
+    }
+
+    if (!participant.checkoutId) {
+      return { available: false };
+    }
+
+    const checkout = await this.checkoutRepository.findById(
+      participant.checkoutId
+    );
+    if (!checkout || checkout.status !== "approved") {
+      return { available: false };
     }
 
     const eventDate = new Date("2025-07-29");
