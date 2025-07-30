@@ -109,7 +109,7 @@ export class CreateCheckoutUseCase {
         back_urls: {
           success: "https://veranotalk.com.br/success",
         },
-        auto_return: "approved" as "approved",
+        // auto_return: "approved" as "approved",
       };
 
       const preferenceResponse = await preferenceClient.create({

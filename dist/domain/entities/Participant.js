@@ -110,7 +110,7 @@ class Participant {
         this.props.updatedAt = new Date();
     }
     // Método para serialização segura
-    toDTO(maskQrCode = true) {
+    toDTO() {
         return {
             id: this.id,
             checkoutId: this.checkoutId,
