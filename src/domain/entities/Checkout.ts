@@ -16,10 +16,11 @@ export interface CheckoutProps {
   id?: string;
   totalAmount: number;
   status: CheckoutStatus;
-  // orderId?: string;
   paymentMethod?: string | null;
   payer?: Payer | null;
   mercadoPagoId?: string | null;
+  fullTickets: number;
+  halfTickets: number;
   createdAt?: Date;
   updatedAt?: Date;
   metadata?: {
@@ -32,6 +33,8 @@ export interface CheckoutProps {
 
 export class Checkout {
   private readonly props: CheckoutProps;
+  private readonly valueFullTickets: number;
+  private readonly valueHalfTickets: number;
 
   constructor(props: CheckoutProps) {
     this.props = {
@@ -45,6 +48,9 @@ export class Checkout {
         ...props.metadata,
       },
     };
+
+    this.valueFullTickets = 499;
+    this.valueHalfTickets = 249.9;
 
     this.validate();
   }
@@ -90,6 +96,14 @@ export class Checkout {
     return this.props.payer ?? null;
   }
 
+  get fullTickets(): number {
+    return this.props.fullTickets;
+  }
+
+  get halfTickets(): number {
+    return this.props.halfTickets;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt!;
   }
@@ -118,6 +132,13 @@ export class Checkout {
   setPayer(payer: Payer) {
     this.props.payer = payer;
     this.props.updatedAt = new Date();
+  }
+
+  calculateTotalAmount(fullTickets: number, halfTickets: number): number {
+    // const totalTickets = fullTickets + halfTickets;
+    const totalAmount =
+      fullTickets * this.valueFullTickets + halfTickets * this.valueHalfTickets;
+    return totalAmount;
   }
 
   // Métodos de domínio
@@ -185,6 +206,8 @@ export class Checkout {
       paymentMethod: this.paymentMethod,
       payer: this.payer,
       mercadoPagoId: this.mercadoPagoId,
+      fullTickets: this.fullTickets,
+      halfTickets: this.halfTickets,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       metadata: this.metadata.error
@@ -209,6 +232,8 @@ export type CheckoutDTO = {
   paymentMethod: string;
   payer: Payer;
   mercadoPagoId?: string | null;
+  fullTickets?: number;
+  halfTickets?: number;
   createdAt: Date;
   updatedAt: Date;
   metadata?: {

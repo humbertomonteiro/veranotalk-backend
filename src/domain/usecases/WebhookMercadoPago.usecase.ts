@@ -73,6 +73,7 @@ class WebhookMercadoPagoUseCase {
           checkoutStatus = "approved";
           break;
         case "pending":
+        case "in_process":
           checkoutStatus = "pending";
           break;
         case "rejected":

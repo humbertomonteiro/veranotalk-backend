@@ -71,7 +71,7 @@ export class CreateCheckoutUseCase {
           new Participant({
             ...props,
             eventId: props.eventId || "verano-talk",
-            checkoutId: checkoutId || "", // Atribuir checkoutId diretamente
+            checkoutId: checkoutId || "",
           })
       );
       const participantIds: string[] = [];
@@ -96,9 +96,13 @@ export class CreateCheckoutUseCase {
           {
             id: `item-${checkoutId}`,
             title: `Ingressos para evento ${
-              input.checkout.metadata?.eventId || "event-1018"
+              input.checkout.metadata?.eventId || "Verano Talk"
             }`,
-            unit_price: checkout.totalAmount,
+            unit_price: checkout.calculateTotalAmount(
+              input.checkout.fullTickets,
+              input.checkout.halfTickets
+            ),
+            // unit_price: checkout.totalAmount,
             quantity: 1,
           },
         ],

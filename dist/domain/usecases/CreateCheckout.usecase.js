@@ -40,7 +40,7 @@ class CreateCheckoutUseCase {
             const participants = input.participants.map((props) => new entities_1.Participant({
                 ...props,
                 eventId: props.eventId || "verano-talk",
-                checkoutId: checkoutId || "", // Atribuir checkoutId diretamente
+                checkoutId: checkoutId || "",
             }));
             const participantIds = [];
             for (const participant of participants) {
@@ -59,7 +59,8 @@ class CreateCheckoutUseCase {
                     {
                         id: `item-${checkoutId}`,
                         title: `Ingressos para evento ${input.checkout.metadata?.eventId || "event-1018"}`,
-                        unit_price: checkout.totalAmount,
+                        unit_price: checkout.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets),
+                        // unit_price: checkout.totalAmount,
                         quantity: 1,
                     },
                 ],

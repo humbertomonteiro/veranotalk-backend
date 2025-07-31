@@ -39,8 +39,13 @@ class CheckoutController {
     async getCheckoutById(req, res) {
         try {
             const checkoutId = req.params.id;
+            console.log(`Fetching checkout with ID: ${checkoutId}`);
             const checkout = await this.checkoutService.getCheckoutById(checkoutId);
-            res.status(200).json(checkout);
+            if (!checkout) {
+                res.status(404).json({ error: "Checkout not found" });
+                return;
+            }
+            res.status(200).json(checkout.toDTO()); // Use toDTO() to return plain object
         }
         catch (error) {
             console.error("Erro ao buscar checkout:", error);
