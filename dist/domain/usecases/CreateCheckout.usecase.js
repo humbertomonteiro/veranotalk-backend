@@ -85,7 +85,7 @@ class CreateCheckoutUseCase {
             // Atualizar checkout com Mercado Pago ID
             checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
             await this.checkoutRepository.update(checkout);
-            console.log(`Checkout atualizado com mercadoPagoId: ${preferenceResponse.id}`);
+            console.log(`Checkout atualizado com mercadoPagoPreferenceId: ${preferenceResponse.id}`);
             return {
                 checkoutId,
                 paymentUrl: preferenceResponse.init_point,

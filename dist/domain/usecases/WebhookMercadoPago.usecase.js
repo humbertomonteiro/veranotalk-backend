@@ -39,12 +39,7 @@ class WebhookMercadoPagoUseCase {
             const payerDocument = payment.payer?.identification?.number || "";
             const payerName = `${payerFirstName} ${payerLastName}`.trim() || "Desconhecido";
             logger_1.default.info("Status do pagamento obtido", {
-                mercadoPagoId,
-                status,
-                externalReference,
-                paymentMethodId,
-                payerName,
-                payerDocument,
+                payment,
             });
             // Mapear status do Mercado Pago para CheckoutStatus
             let checkoutStatus;
@@ -99,6 +94,9 @@ class WebhookMercadoPagoUseCase {
                 // Para payment.created, buscar pelo external_reference (checkoutId)
                 if (!externalReference)
                     throw new Error("External reference not fuound!");
+                logger_1.default.info("External Reference obtido", {
+                    externalReference,
+                });
                 checkout = await this.checkoutRepository.findById(externalReference);
                 // } else {
                 //   // Para payment.updated, buscar pelo mercadoPagoId

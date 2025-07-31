@@ -246,6 +246,7 @@ export type CheckoutDTO = {
   paymentMethod: string;
   payer: Payer;
   mercadoPagoId?: string | null;
+  mercadoPagoPreferenceId?: string | null;
   fullTickets?: number;
   halfTickets?: number;
   createdAt: Date;

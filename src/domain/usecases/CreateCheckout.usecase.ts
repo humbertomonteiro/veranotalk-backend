@@ -137,7 +137,7 @@ export class CreateCheckoutUseCase {
       checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
       await this.checkoutRepository.update(checkout);
       console.log(
-        `Checkout atualizado com mercadoPagoId: ${preferenceResponse.id}`
+        `Checkout atualizado com mercadoPagoPreferenceId: ${preferenceResponse.id}`
       );
 
       return {

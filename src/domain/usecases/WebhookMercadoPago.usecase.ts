@@ -58,12 +58,7 @@ class WebhookMercadoPagoUseCase {
         `${payerFirstName} ${payerLastName}`.trim() || "Desconhecido";
 
       logger.info("Status do pagamento obtido", {
-        mercadoPagoId,
-        status,
-        externalReference,
-        paymentMethodId,
-        payerName,
-        payerDocument,
+        payment,
       });
 
       // Mapear status do Mercado Pago para CheckoutStatus
@@ -121,6 +116,9 @@ class WebhookMercadoPagoUseCase {
         // Para payment.created, buscar pelo external_reference (checkoutId)
         if (!externalReference)
           throw new Error("External reference not fuound!");
+        logger.info("External Reference obtido", {
+          externalReference,
+        });
         checkout = await this.checkoutRepository.findById(externalReference);
         // } else {
         //   // Para payment.updated, buscar pelo mercadoPagoId
