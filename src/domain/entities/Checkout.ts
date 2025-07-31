@@ -94,7 +94,7 @@ export class Checkout {
   }
 
   get mercadoPagoPreferenceId(): string | null {
-    return this.props.mercadoPagoId ?? null;
+    return this.props.mercadoPagoPreferenceId ?? null;
   }
 
   get payer(): Payer | null {
