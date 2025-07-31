@@ -134,7 +134,7 @@ export class CreateCheckoutUseCase {
       }
 
       // Atualizar checkout com Mercado Pago ID
-      checkout.setMercadoPagoId(preferenceResponse.id);
+      checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
       await this.checkoutRepository.update(checkout);
       console.log(
         `Checkout atualizado com mercadoPagoId: ${preferenceResponse.id}`

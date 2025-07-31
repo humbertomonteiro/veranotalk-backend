@@ -95,6 +95,7 @@ class WebhookMercadoPagoUseCase {
         case "master":
         case "amex":
         case "elo":
+        case "debelo":
           paymentMethod = "credit_card";
           break;
         case "pix":
@@ -116,15 +117,17 @@ class WebhookMercadoPagoUseCase {
       let checkout: Checkout | null = null;
       let attempts = 3;
       while (attempts > 0) {
-        if (input.action === "payment.created" && externalReference) {
-          // Para payment.created, buscar pelo external_reference (checkoutId)
-          checkout = await this.checkoutRepository.findById(externalReference);
-        } else {
-          // Para payment.updated, buscar pelo mercadoPagoId
-          checkout = await this.checkoutRepository.findByMercadoPagoId(
-            mercadoPagoId
-          );
-        }
+        // if (input.action === "payment.created" && externalReference) {
+        // Para payment.created, buscar pelo external_reference (checkoutId)
+        if (!externalReference)
+          throw new Error("External reference not fuound!");
+        checkout = await this.checkoutRepository.findById(externalReference);
+        // } else {
+        //   // Para payment.updated, buscar pelo mercadoPagoId
+        //   checkout = await this.checkoutRepository.findByMercadoPagoId(
+        //     mercadoPagoId
+        //   );
+        // }
 
         if (checkout) {
           logger.info("Checkout encontrado", {

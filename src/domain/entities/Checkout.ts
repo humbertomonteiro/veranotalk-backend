@@ -19,6 +19,7 @@ export interface CheckoutProps {
   paymentMethod?: string | null;
   payer?: Payer | null;
   mercadoPagoId?: string | null;
+  mercadoPagoPreferenceId?: string | null;
   fullTickets: number;
   halfTickets: number;
   createdAt?: Date;
@@ -92,6 +93,10 @@ export class Checkout {
     return this.props.mercadoPagoId ?? null;
   }
 
+  get mercadoPagoPreferenceId(): string | null {
+    return this.props.mercadoPagoId ?? null;
+  }
+
   get payer(): Payer | null {
     return this.props.payer ?? null;
   }
@@ -121,6 +126,14 @@ export class Checkout {
       `Definindo mercadoPagoId: ${mercadoPagoId} para checkout com ID: ${this.id}`
     );
     this.props.mercadoPagoId = mercadoPagoId;
+    this.props.updatedAt = new Date();
+  }
+
+  setMercadoPagoPreferenceId(mercadoPagoPreferenceId: string): void {
+    console.log(
+      `Definindo mercadoPagoPreferenceId: ${mercadoPagoPreferenceId} para checkout com ID: ${this.id}`
+    );
+    this.props.mercadoPagoPreferenceId = mercadoPagoPreferenceId;
     this.props.updatedAt = new Date();
   }
 
@@ -206,6 +219,7 @@ export class Checkout {
       paymentMethod: this.paymentMethod,
       payer: this.payer,
       mercadoPagoId: this.mercadoPagoId,
+      mercadoPagoPreferenceId: this.mercadoPagoPreferenceId,
       fullTickets: this.fullTickets,
       halfTickets: this.halfTickets,
       createdAt: this.createdAt,

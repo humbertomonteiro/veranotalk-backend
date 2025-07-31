@@ -58,7 +58,7 @@ class CreateCheckoutUseCase {
                 items: [
                     {
                         id: `item-${checkoutId}`,
-                        title: `Ingressos para evento ${input.checkout.metadata?.eventId || "event-1018"}`,
+                        title: `Ingressos para evento ${input.checkout.metadata?.eventId || "Verano Talk"}`,
                         unit_price: checkout.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets),
                         // unit_price: checkout.totalAmount,
                         quantity: 1,
@@ -83,7 +83,7 @@ class CreateCheckoutUseCase {
                 throw new errors_1.InternalServerError("Resposta do Mercado Pago inválida: init_point ou id ausente");
             }
             // Atualizar checkout com Mercado Pago ID
-            checkout.setMercadoPagoId(preferenceResponse.id);
+            checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
             await this.checkoutRepository.update(checkout);
             console.log(`Checkout atualizado com mercadoPagoId: ${preferenceResponse.id}`);
             return {

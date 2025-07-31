@@ -46,6 +46,9 @@ class Checkout {
     get mercadoPagoId() {
         return this.props.mercadoPagoId ?? null;
     }
+    get mercadoPagoPreferenceId() {
+        return this.props.mercadoPagoId ?? null;
+    }
     get payer() {
         return this.props.payer ?? null;
     }
@@ -67,6 +70,11 @@ class Checkout {
     setMercadoPagoId(mercadoPagoId) {
         console.log(`Definindo mercadoPagoId: ${mercadoPagoId} para checkout com ID: ${this.id}`);
         this.props.mercadoPagoId = mercadoPagoId;
+        this.props.updatedAt = new Date();
+    }
+    setMercadoPagoPreferenceId(mercadoPagoPreferenceId) {
+        console.log(`Definindo mercadoPagoPreferenceId: ${mercadoPagoPreferenceId} para checkout com ID: ${this.id}`);
+        this.props.mercadoPagoPreferenceId = mercadoPagoPreferenceId;
         this.props.updatedAt = new Date();
     }
     setPaymentMethod(paymentMethod) {
@@ -139,6 +147,7 @@ class Checkout {
             paymentMethod: this.paymentMethod,
             payer: this.payer,
             mercadoPagoId: this.mercadoPagoId,
+            mercadoPagoPreferenceId: this.mercadoPagoPreferenceId,
             fullTickets: this.fullTickets,
             halfTickets: this.halfTickets,
             createdAt: this.createdAt,
