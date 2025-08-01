@@ -26,6 +26,8 @@ class CheckoutController {
     async handleWebhook(req, res) {
         try {
             const input = req.body;
+            const xSignature = req.header;
+            console.log(xSignature);
             await this.checkoutService.handleWebhook(input);
             res.status(200).send("OK");
         }
@@ -39,7 +41,6 @@ class CheckoutController {
     async getCheckoutById(req, res) {
         try {
             const checkoutId = req.params.id;
-            console.log(`Fetching checkout with ID: ${checkoutId}`);
             const checkout = await this.checkoutService.getCheckoutById(checkoutId);
             if (!checkout) {
                 res.status(404).json({ error: "Checkout not found" });

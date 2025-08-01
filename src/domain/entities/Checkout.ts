@@ -14,7 +14,7 @@ export type Payer = {
 
 export interface CheckoutProps {
   id?: string;
-  totalAmount: number;
+  totalAmount?: number | null;
   status: CheckoutStatus;
   paymentMethod?: string | null;
   payer?: Payer | null;
@@ -34,8 +34,6 @@ export interface CheckoutProps {
 
 export class Checkout {
   private readonly props: CheckoutProps;
-  private readonly valueFullTickets: number;
-  private readonly valueHalfTickets: number;
 
   constructor(props: CheckoutProps) {
     this.props = {
@@ -50,17 +48,14 @@ export class Checkout {
       },
     };
 
-    this.valueFullTickets = 499;
-    this.valueHalfTickets = 249.9;
-
     this.validate();
   }
 
   private validate(): void {
     const errors: string[] = [];
 
-    if (this.totalAmount <= 0) {
-      errors.push("Valor total deve ser maior que zero");
+    if (this.fullTickets <= 0 && this.halfTickets <= 0) {
+      throw new CheckoutError("Tickets empty");
     }
 
     if (errors.length > 0) {
@@ -73,8 +68,8 @@ export class Checkout {
     return this.props.id;
   }
 
-  get totalAmount(): number {
-    return this.props.totalAmount;
+  get totalAmount(): number | null {
+    return this.props.totalAmount || null;
   }
 
   get status(): CheckoutStatus {
@@ -147,11 +142,9 @@ export class Checkout {
     this.props.updatedAt = new Date();
   }
 
-  calculateTotalAmount(fullTickets: number, halfTickets: number): number {
-    // const totalTickets = fullTickets + halfTickets;
-    const totalAmount =
-      fullTickets * this.valueFullTickets + halfTickets * this.valueHalfTickets;
-    return totalAmount;
+  setTotalAmount(value: number) {
+    this.props.totalAmount = value;
+    this.props.updatedAt = new Date();
   }
 
   // Métodos de domínio

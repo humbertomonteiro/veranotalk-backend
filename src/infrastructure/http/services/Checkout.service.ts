@@ -21,8 +21,17 @@ export class CheckoutService {
     return this.createCheckoutUseCase.execute(input);
   }
 
-  async handleWebhook(input: WebhookMercadoPagoInput): Promise<void> {
-    await this.webhookUseCase.execute(input);
+  async handleWebhook(
+    input: WebhookMercadoPagoInput,
+    xSignature: any,
+    xRequestId: any,
+    dataIdUrl: any
+  ): Promise<void> {
+    if (!xSignature || !xRequestId || !dataIdUrl) {
+      throw new Error("Missing headers or query params");
+    }
+
+    await this.webhookUseCase.execute(input, xSignature, xRequestId, dataIdUrl);
   }
 
   async getCheckoutById(checkoutId: string): Promise<Checkout | null> {

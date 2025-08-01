@@ -31,7 +31,16 @@ export class CheckoutController {
   async handleWebhook(req: Request, res: Response): Promise<void> {
     try {
       const input: WebhookMercadoPagoInput = req.body;
-      await this.checkoutService.handleWebhook(input);
+      const xSignature = req.header("x-signature");
+      const xRequestId = req.header("x-request-id");
+      const dataIdUrl = req.query["data.id"];
+
+      await this.checkoutService.handleWebhook(
+        input,
+        xSignature,
+        xRequestId,
+        dataIdUrl
+      );
       res.status(200).send("OK");
     } catch (error) {
       console.error("Erro ao processar webhook:", error);
@@ -45,13 +54,12 @@ export class CheckoutController {
   async getCheckoutById(req: Request, res: Response): Promise<void> {
     try {
       const checkoutId = req.params.id;
-      console.log(`Fetching checkout with ID: ${checkoutId}`);
       const checkout = await this.checkoutService.getCheckoutById(checkoutId);
       if (!checkout) {
         res.status(404).json({ error: "Checkout not found" });
         return;
       }
-      res.status(200).json(checkout.toDTO()); // Use toDTO() to return plain object
+      res.status(200).json(checkout.toDTO());
     } catch (error) {
       console.error("Erro ao buscar checkout:", error);
       res

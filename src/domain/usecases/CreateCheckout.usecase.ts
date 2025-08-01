@@ -86,6 +86,12 @@ export class CreateCheckoutUseCase {
 
       // Atualizar checkout com participantIds
       checkout.addParticipants(participantIds);
+      checkout.setTotalAmount(
+        this.calculateTotalAmount(
+          input.checkout.fullTickets,
+          input.checkout.halfTickets
+        )
+      );
       checkout.startProcessing();
       await this.checkoutRepository.update(checkout);
       console.log(`Checkout atualizado para processing: ${checkoutId}`);
@@ -98,11 +104,7 @@ export class CreateCheckoutUseCase {
             title: `Ingressos para evento ${
               input.checkout.metadata?.eventId || "Verano Talk"
             }`,
-            unit_price: checkout.calculateTotalAmount(
-              input.checkout.fullTickets,
-              input.checkout.halfTickets
-            ),
-            // unit_price: checkout.totalAmount,
+            unit_price: checkout.totalAmount!,
             quantity: 1,
           },
         ],
@@ -161,6 +163,17 @@ export class CreateCheckoutUseCase {
         ? error
         : new InternalServerError("Falha ao criar checkout");
     }
+  }
+
+  private calculateTotalAmount(fullTickets: number, halfTickets: number) {
+    const valueTicketAll = process.env.BASE_TICKET_PRICE;
+    const valueTicketHalf = process.env.HALF_TICKET_PRICE;
+
+    const totalAmount =
+      fullTickets * Number(valueTicketAll) +
+      halfTickets * Number(valueTicketHalf);
+
+    return totalAmount;
   }
 }
 
