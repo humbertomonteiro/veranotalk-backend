@@ -47,7 +47,7 @@ class Checkout {
         return this.props.mercadoPagoId ?? null;
     }
     get mercadoPagoPreferenceId() {
-        return this.props.mercadoPagoId ?? null;
+        return this.props.mercadoPagoPreferenceId ?? null;
     }
     get payer() {
         return this.props.payer ?? null;
