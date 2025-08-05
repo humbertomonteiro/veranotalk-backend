@@ -129,3 +129,167 @@
 {"checkoutId":"8O5XYJxEUTsmLOuebnGI","level":"info","mercadoPagoId":"1324278280","message":"Checkout atualizado","payerDocument":"12345678909","payerName":"apro","paymentMethod":"credit_card","status":"approved","timestamp":"2025-08-01 17:24:31"}
 {"checkoutId":"8O5XYJxEUTsmLOuebnGI","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para humfplay@gmail.com","timestamp":"2025-08-01 17:24:34"}
 {"checkoutId":"8O5XYJxEUTsmLOuebnGI","email":"humfplay@gmail.com","level":"info","message":"E-mail de confirmação enviado","timestamp":"2025-08-01 17:24:34"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-02 09:08:16"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1340011611","message":"Processando webhook","timestamp":"2025-08-02 09:08:16"}
+{"externalReference":"IBfPf9v2kC70xCTyDwQB","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 09:08:16"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","externalReference":"IBfPf9v2kC70xCTyDwQB","level":"info","mercadoPagoId":"1340011611","message":"Checkout encontrado","payerDocument":"12345678909","payerName":"apro","paymentMethod":"credit_card","timestamp":"2025-08-02 09:08:17"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","level":"info","mercadoPagoId":"1340011611","message":"Checkout atualizado com mercadoPagoId","timestamp":"2025-08-02 09:08:17"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-08-02 09:08:17"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","level":"info","message":"Checkout atualizado com payer","payerDocument":"12345678909","payerName":"apro","timestamp":"2025-08-02 09:08:17"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","level":"info","mercadoPagoId":"1340011611","message":"Checkout atualizado","payerDocument":"12345678909","payerName":"apro","paymentMethod":"credit_card","status":"approved","timestamp":"2025-08-02 09:08:17"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para fsantiago369@gmail.com","timestamp":"2025-08-02 09:08:20"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","email":"fsantiago369@gmail.com","level":"info","message":"E-mail de confirmação enviado","timestamp":"2025-08-02 09:08:20"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para humfplay@gmail.com","timestamp":"2025-08-02 09:08:23"}
+{"checkoutId":"IBfPf9v2kC70xCTyDwQB","email":"humfplay@gmail.com","level":"info","message":"E-mail de confirmação enviado","timestamp":"2025-08-02 09:08:23"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-02 15:21:10"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1339955979","message":"Processando webhook","timestamp":"2025-08-02 15:21:10"}
+{"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 15:21:10"}
+{"attempt":1,"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"warn","mercadoPagoId":"1339955979","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 15:21:11"}
+{"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 15:21:12"}
+{"attempt":2,"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"warn","mercadoPagoId":"1339955979","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 15:21:12"}
+{"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 15:21:13"}
+{"attempt":3,"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"warn","mercadoPagoId":"1339955979","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 15:21:13"}
+{"externalReference":"4UoEJM7AwDxMXbJsxKB5","level":"error","mercadoPagoId":"1339955979","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-02 15:21:14"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1339955979, externalReference: 4UoEJM7AwDxMXbJsxKB5","level":"error","mercadoPagoId":"1339955979","message":"Erro ao processar webhook","timestamp":"2025-08-02 15:21:14"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-02 21:03:56"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1339964723","message":"Processando webhook","timestamp":"2025-08-02 21:03:56"}
+{"externalReference":"NfvFkMoupKArhOn6kClj","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 21:03:56"}
+{"attempt":1,"externalReference":"NfvFkMoupKArhOn6kClj","level":"warn","mercadoPagoId":"1339964723","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 21:03:56"}
+{"externalReference":"NfvFkMoupKArhOn6kClj","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 21:03:57"}
+{"attempt":2,"externalReference":"NfvFkMoupKArhOn6kClj","level":"warn","mercadoPagoId":"1339964723","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 21:03:58"}
+{"externalReference":"NfvFkMoupKArhOn6kClj","level":"info","message":"External Reference obtido","timestamp":"2025-08-02 21:03:59"}
+{"attempt":3,"externalReference":"NfvFkMoupKArhOn6kClj","level":"warn","mercadoPagoId":"1339964723","message":"Checkout não encontrado, retrying","timestamp":"2025-08-02 21:03:59"}
+{"externalReference":"NfvFkMoupKArhOn6kClj","level":"error","mercadoPagoId":"1339964723","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-02 21:04:00"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1339964723, externalReference: NfvFkMoupKArhOn6kClj","level":"error","mercadoPagoId":"1339964723","message":"Erro ao processar webhook","timestamp":"2025-08-02 21:04:00"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 22:26:26"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1340038613","message":"Processando webhook","timestamp":"2025-08-03 22:26:26"}
+{"externalReference":"MayqPlfZj9BGBRfolomO","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","externalReference":"MayqPlfZj9BGBRfolomO","level":"info","mercadoPagoId":"1340038613","message":"Checkout encontrado","payerDocument":"12345678909","payerName":"apro","paymentMethod":"credit_card","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","level":"info","mercadoPagoId":"1340038613","message":"Checkout atualizado com mercadoPagoId","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"credit_card","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","level":"info","message":"Checkout atualizado com payer","payerDocument":"12345678909","payerName":"apro","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","level":"info","mercadoPagoId":"1340038613","message":"Checkout atualizado","payerDocument":"12345678909","payerName":"apro","paymentMethod":"credit_card","status":"approved","timestamp":"2025-08-03 22:26:26"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para fsantiago369@gmail.com","timestamp":"2025-08-03 22:26:29"}
+{"checkoutId":"MayqPlfZj9BGBRfolomO","email":"fsantiago369@gmail.com","level":"info","message":"E-mail de confirmação enviado","timestamp":"2025-08-03 22:26:29"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 22:30:49"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293908","message":"Processando webhook","timestamp":"2025-08-03 22:30:49"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:30:49"}
+{"attempt":1,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:30:50"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:30:51"}
+{"attempt":2,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:30:51"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:30:52"}
+{"attempt":3,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:30:52"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 22:30:53"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293908, externalReference: m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Erro ao processar webhook","timestamp":"2025-08-03 22:30:53"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 22:35:22"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293928","message":"Processando webhook","timestamp":"2025-08-03 22:35:22"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:35:23"}
+{"attempt":1,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:35:23"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:35:24"}
+{"attempt":2,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:35:24"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:35:25"}
+{"attempt":3,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:35:25"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 22:35:26"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293928, externalReference: U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Erro ao processar webhook","timestamp":"2025-08-03 22:35:26"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 22:41:44"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324294010","message":"Processando webhook","timestamp":"2025-08-03 22:41:44"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:41:44"}
+{"attempt":1,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:41:44"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:41:45"}
+{"attempt":2,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:41:45"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 22:41:46"}
+{"attempt":3,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 22:41:47"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 22:41:48"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324294010, externalReference: x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Erro ao processar webhook","timestamp":"2025-08-03 22:41:48"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 23:07:06"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293908","message":"Processando webhook","timestamp":"2025-08-03 23:07:06"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:07:06"}
+{"attempt":1,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:07:06"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:07:07"}
+{"attempt":2,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:07:07"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:07:08"}
+{"attempt":3,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:07:09"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 23:07:10"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293908, externalReference: m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Erro ao processar webhook","timestamp":"2025-08-03 23:07:10"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 23:11:18"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293928","message":"Processando webhook","timestamp":"2025-08-03 23:11:18"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:11:18"}
+{"attempt":1,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:11:18"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:11:19"}
+{"attempt":2,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:11:19"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:11:20"}
+{"attempt":3,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:11:20"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 23:11:21"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293928, externalReference: U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Erro ao processar webhook","timestamp":"2025-08-03 23:11:21"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-03 23:15:27"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324294010","message":"Processando webhook","timestamp":"2025-08-03 23:15:27"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:15:28"}
+{"attempt":1,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:15:28"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:15:29"}
+{"attempt":2,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:15:29"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-03 23:15:30"}
+{"attempt":3,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-03 23:15:30"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-03 23:15:31"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324294010, externalReference: x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Erro ao processar webhook","timestamp":"2025-08-03 23:15:31"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-04 03:51:51"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324280064","message":"Processando webhook","timestamp":"2025-08-04 03:51:51"}
+{"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 03:51:51"}
+{"attempt":1,"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"warn","mercadoPagoId":"1324280064","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 03:51:51"}
+{"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 03:51:52"}
+{"attempt":2,"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"warn","mercadoPagoId":"1324280064","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 03:51:52"}
+{"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 03:51:53"}
+{"attempt":3,"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"warn","mercadoPagoId":"1324280064","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 03:51:54"}
+{"externalReference":"4c7wBBDTOacjGLvfXRUS","level":"error","mercadoPagoId":"1324280064","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-04 03:51:55"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324280064, externalReference: 4c7wBBDTOacjGLvfXRUS","level":"error","mercadoPagoId":"1324280064","message":"Erro ao processar webhook","timestamp":"2025-08-04 03:51:55"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-04 05:11:09"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293908","message":"Processando webhook","timestamp":"2025-08-04 05:11:09"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:11:09"}
+{"attempt":1,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:11:10"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:11:11"}
+{"attempt":2,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:11:11"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:11:12"}
+{"attempt":3,"externalReference":"m0DXuvIctYFpB63EmcqY","level":"warn","mercadoPagoId":"1324293908","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:11:12"}
+{"externalReference":"m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-04 05:11:13"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293908, externalReference: m0DXuvIctYFpB63EmcqY","level":"error","mercadoPagoId":"1324293908","message":"Erro ao processar webhook","timestamp":"2025-08-04 05:11:13"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-04 05:15:49"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324293928","message":"Processando webhook","timestamp":"2025-08-04 05:15:49"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:15:49"}
+{"attempt":1,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:15:49"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:15:50"}
+{"attempt":2,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:15:51"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:15:52"}
+{"attempt":3,"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"warn","mercadoPagoId":"1324293928","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:15:52"}
+{"externalReference":"U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-04 05:15:53"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324293928, externalReference: U52FIDSfcQpwQ37h0LPM","level":"error","mercadoPagoId":"1324293928","message":"Erro ao processar webhook","timestamp":"2025-08-04 05:15:53"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-04 05:21:12"}
+{"action":"payment.created","level":"info","mercadoPagoId":"1324294010","message":"Processando webhook","timestamp":"2025-08-04 05:21:12"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:21:12"}
+{"attempt":1,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:21:12"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:21:13"}
+{"attempt":2,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:21:13"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"info","message":"External Reference obtido","timestamp":"2025-08-04 05:21:14"}
+{"attempt":3,"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"warn","mercadoPagoId":"1324294010","message":"Checkout não encontrado, retrying","timestamp":"2025-08-04 05:21:15"}
+{"externalReference":"x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Checkout não encontrado após 3 tentativas","timestamp":"2025-08-04 05:21:16"}
+{"action":"payment.created","error":"Checkout não encontrado para mercadoPagoId: 1324294010, externalReference: x6pxFgk3ppWZiCVESgVn","level":"error","mercadoPagoId":"1324294010","message":"Erro ao processar webhook","timestamp":"2025-08-04 05:21:16"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:03:40"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:04:26"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:04:26"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-05 11:08:23"}
+{"action":"payment.created","level":"info","mercadoPagoId":"121089721082","message":"Processando webhook","timestamp":"2025-08-05 11:08:23"}
+{"action":"payment.created","error":"Erro desconhecido","level":"error","mercadoPagoId":"121089721082","message":"Erro ao processar webhook","timestamp":"2025-08-05 11:08:23"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-05 11:09:03"}
+{"action":"payment.created","level":"info","mercadoPagoId":"121089721082","message":"Processando webhook","timestamp":"2025-08-05 11:09:03"}
+{"action":"payment.created","error":"Erro desconhecido","level":"error","mercadoPagoId":"121089721082","message":"Erro ao processar webhook","timestamp":"2025-08-05 11:09:03"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-05 11:09:03"}
+{"action":"payment.created","level":"info","mercadoPagoId":"121089721082","message":"Processando webhook","timestamp":"2025-08-05 11:09:03"}
+{"action":"payment.created","error":"Erro desconhecido","level":"error","mercadoPagoId":"121089721082","message":"Erro ao processar webhook","timestamp":"2025-08-05 11:09:03"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:07"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:08"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:08"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:08"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:09"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:09"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:52"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:52"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:52"}
+{"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:53"}

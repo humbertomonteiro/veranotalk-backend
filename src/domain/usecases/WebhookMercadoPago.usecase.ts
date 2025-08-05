@@ -23,6 +23,15 @@ interface WebhookMercadoPagoInput {
   user_id: string;
 }
 
+const production = true;
+const accessToken = production
+  ? process.env.MERCADO_PAGO_ACCESS_TOKEN_PRODUCTION || "SUA_CHAVE_AQUI"
+  : process.env.MERCADO_PAGO_ACCESS_TOKEN_SANDBOX || "SUA_CHAVE_AQUI";
+
+const webhookSecret = production
+  ? process.env.MERCADO_PAGO_WEBHOOK_SECRET_PRODUCTION
+  : process.env.MERCADO_PAGO_WEBHOOK_SECRET_SANDBOX;
+
 class WebhookMercadoPagoUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
@@ -51,7 +60,7 @@ class WebhookMercadoPagoUseCase {
 
       // Configurar cliente do Mercado Pago
       const client = new MercadoPagoConfig({
-        accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "",
+        accessToken: accessToken,
       });
       const paymentClient = new Payment(client);
 
@@ -261,7 +270,7 @@ class WebhookMercadoPagoUseCase {
 
     const manifest = `id:${idFormatted};request-id:${xRequestId};ts:${ts};`;
 
-    const secret = process.env.MERCADO_PAGO_WEBHOOK_SECRET;
+    const secret = webhookSecret;
     if (!secret) throw new Error("Secret not found");
 
     const generatedHash = crypto

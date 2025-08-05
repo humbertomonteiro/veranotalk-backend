@@ -52,7 +52,7 @@ export async function sendConfirmationEmail(
                 </td>
               </tr>
             </table>
-            <p style="font-size: 14px; color: #666666; margin: 20px 0 0;">Dúvidas? Entre em contato com nossa equipe pelo e-mail <a href="mailto:suporte@veranotalk.com.br" style="color: #ddd3c3; text-decoration: none;">suporte@veranotalk.com.br</a>.</p>
+            <p style="font-size: 14px; color: #666666; margin: 20px 0 0;">Dúvidas? Entre em contato com nossa equipe pelo e-mail <a href="mailto:suporteveranotalk@gmail.com" style="color: #ddd3c3; text-decoration: none;">suporte@veranotalk.com.br</a>.</p>
           </td>
         </tr>
         <!-- Detalhes do Evento -->

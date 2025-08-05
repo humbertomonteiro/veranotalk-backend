@@ -14,8 +14,16 @@ import { InternalServerError, ValidationError } from "../../utils/errors";
 import { config } from "dotenv";
 config();
 
+const production = true;
+const accessToken = production
+  ? process.env.MERCADO_PAGO_ACCESS_TOKEN_PRODUCTION || "SUA_CHAVE_AQUI"
+  : process.env.MERCADO_PAGO_ACCESS_TOKEN_SANDBOX || "SUA_CHAVE_AQUI";
+
 const mercadoPagoClient = new MercadoPagoConfig({
-  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "SUA_CHAVE_AQUI",
+  accessToken: accessToken,
+  options: {
+    integratorId: "dev_c6a5b0e1720711f08601a2fe03ffde10",
+  },
 });
 const preferenceClient = new Preference(mercadoPagoClient);
 
