@@ -45,34 +45,6 @@ const participantService = new ParticipantService(
 );
 const participantController = new ParticipantController(participantService);
 
-// const mercadoPagoProvaPreference = new MercadoPagoProva();
-
-// app.post("/prova", async (req: Request, res: Response) => {
-//   const input = req.body;
-//   try {
-//     const response = await mercadoPagoProvaPreference.execute(input);
-//     res.status(200).json(response);
-//   } catch (error) {
-//     res.json(error);
-//   }
-// });
-
-// app.post("/webhook", async (req, res) => {
-//   try {
-//     const webhook = new SimpleMercadoPagoWebhook();
-//     const result = await webhook.execute(
-//       req.body,
-//       req.headers["x-signature"] as string,
-//       req.headers["x-request-id"] as string,
-//       req.body.id
-//     );
-//     res.status(200).json(result);
-//   } catch (error) {
-//     console.error("Erro no webhook:", error);
-//     res.status(400).json({ error: "Falha no processamento" });
-//   }
-// });
-
 // Rotas
 app.post("/checkout", (req: Request, res: Response) =>
   checkoutController.createCheckout(req, res)
