@@ -26,9 +26,10 @@ class CheckoutController {
     async handleWebhook(req, res) {
         try {
             const input = req.body;
-            const xSignature = req.header;
-            console.log(xSignature);
-            await this.checkoutService.handleWebhook(input);
+            const xSignature = req.header("x-signature");
+            const xRequestId = req.header("x-request-id");
+            const dataIdUrl = req.query["data.id"];
+            await this.checkoutService.handleWebhook(input, xSignature, xRequestId, dataIdUrl);
             res.status(200).send("OK");
         }
         catch (error) {
@@ -46,7 +47,7 @@ class CheckoutController {
                 res.status(404).json({ error: "Checkout not found" });
                 return;
             }
-            res.status(200).json(checkout.toDTO()); // Use toDTO() to return plain object
+            res.status(200).json(checkout.toDTO());
         }
         catch (error) {
             console.error("Erro ao buscar checkout:", error);

@@ -7,13 +7,24 @@ exports.WebhookMercadoPagoUseCase = void 0;
 const mercadopago_1 = require("mercadopago");
 const sendEmail_utils_1 = require("../../utils/sendEmail.utils");
 const logger_1 = __importDefault(require("../../utils/logger"));
+const crypto_1 = __importDefault(require("crypto"));
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const production = true;
+const accessToken = production
+    ? process.env.MERCADO_PAGO_ACCESS_TOKEN_PRODUCTION || "SUA_CHAVE_AQUI"
+    : process.env.MERCADO_PAGO_ACCESS_TOKEN_SANDBOX || "SUA_CHAVE_AQUI";
+const webhookSecret = production
+    ? process.env.MERCADO_PAGO_WEBHOOK_SECRET_PRODUCTION
+    : process.env.MERCADO_PAGO_WEBHOOK_SECRET_SANDBOX;
 class WebhookMercadoPagoUseCase {
     constructor(checkoutRepository, participantRepository) {
         this.checkoutRepository = checkoutRepository;
         this.participantRepository = participantRepository;
     }
-    async execute(input) {
+    async execute(input, xSignature, xRequestId, dataIdUrl) {
         const mercadoPagoId = input.data.id;
+        this.validateXSignature(xSignature, dataIdUrl, xRequestId);
         try {
             logger_1.default.info("Processando webhook", {
                 mercadoPagoId,
@@ -26,23 +37,20 @@ class WebhookMercadoPagoUseCase {
             }
             // Configurar cliente do Mercado Pago
             const client = new mercadopago_1.MercadoPagoConfig({
-                accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "",
+                accessToken: accessToken,
             });
             const paymentClient = new mercadopago_1.Payment(client);
             // Consultar o status do pagamento
             const payment = await paymentClient.get({ id: Number(mercadoPagoId) });
-            const status = payment.status; // Ex.: "approved", "pending", "rejected"
-            const externalReference = payment.external_reference; // checkoutId
-            const paymentMethodId = payment.payment_method_id; // Ex.: "visa", "pix", "bolbradesco"
+            const status = payment.status; //
+            const externalReference = payment.external_reference;
+            const paymentMethodId = payment.payment_method_id;
             const payerFirstName = payment.payer?.first_name || "";
-            const payerLastName = payment.payer?.last_name || payment.card?.cardholder?.name || "";
-            const payerDocument = payment.payer?.identification?.number ||
-                payment.card?.cardholder?.identification?.number ||
+            const payerLastName = payment.card?.cardholder?.name || payment.payer?.last_name || "";
+            const payerDocument = payment.card?.cardholder?.identification?.number ||
+                payment.payer?.identification?.number ||
                 "";
             const payerName = `${payerFirstName} ${payerLastName}`.trim() || "Desconhecido";
-            logger_1.default.info("Status do pagamento obtido", {
-                payment,
-            });
             // Mapear status do Mercado Pago para CheckoutStatus
             let checkoutStatus;
             switch (status) {
@@ -180,7 +188,7 @@ class WebhookMercadoPagoUseCase {
                     attempt: 4 - attempts,
                 });
                 attempts--;
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Espera 1 segundo
+                await new Promise((resolve) => setTimeout(resolve, 1000));
             }
             logger_1.default.error("Checkout não encontrado após 3 tentativas", {
                 mercadoPagoId,
@@ -195,6 +203,39 @@ class WebhookMercadoPagoUseCase {
                 error: error instanceof Error ? error.message : "Erro desconhecido",
             });
             throw error;
+        }
+    }
+    validateXSignature(xSignature, dataIdUrl, xRequestId) {
+        const parts = xSignature.split(",");
+        let ts = null;
+        let v1 = null;
+        for (const part of parts) {
+            const [key, value] = part.split("=").map((p) => p.trim());
+            if (key === "ts")
+                ts = value;
+            if (key === "v1")
+                v1 = value;
+        }
+        if (!ts || !v1) {
+            throw new Error("Invalid x-signature header");
+        }
+        const idFormatted = /^[a-zA-Z0-9]+$/.test(dataIdUrl)
+            ? dataIdUrl.toLowerCase()
+            : dataIdUrl;
+        const manifest = `id:${idFormatted};request-id:${xRequestId};ts:${ts};`;
+        const secret = webhookSecret;
+        if (!secret)
+            throw new Error("Secret not found");
+        const generatedHash = crypto_1.default
+            .createHmac("sha256", secret)
+            .update(manifest)
+            .digest("hex");
+        if (generatedHash === v1) {
+            logger_1.default.info("Webhook verificado com sucesso");
+        }
+        else {
+            logger_1.default.error("Assinatura inválida");
+            throw new Error("Assinatura inválida");
         }
     }
 }

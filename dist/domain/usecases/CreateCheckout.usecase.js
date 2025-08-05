@@ -6,8 +6,15 @@ const entities_1 = require("../entities");
 const errors_1 = require("../../utils/errors");
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
+const production = true;
+const accessToken = production
+    ? process.env.MERCADO_PAGO_ACCESS_TOKEN_PRODUCTION || "SUA_CHAVE_AQUI"
+    : process.env.MERCADO_PAGO_ACCESS_TOKEN_SANDBOX || "SUA_CHAVE_AQUI";
 const mercadoPagoClient = new mercadopago_1.MercadoPagoConfig({
-    accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || "SUA_CHAVE_AQUI",
+    accessToken: accessToken,
+    options: {
+        integratorId: "dev_c6a5b0e1720711f08601a2fe03ffde10",
+    },
 });
 const preferenceClient = new mercadopago_1.Preference(mercadoPagoClient);
 class CreateCheckoutUseCase {
@@ -50,6 +57,7 @@ class CreateCheckoutUseCase {
             }
             // Atualizar checkout com participantIds
             checkout.addParticipants(participantIds);
+            checkout.setTotalAmount(this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets));
             checkout.startProcessing();
             await this.checkoutRepository.update(checkout);
             console.log(`Checkout atualizado para processing: ${checkoutId}`);
@@ -59,8 +67,7 @@ class CreateCheckoutUseCase {
                     {
                         id: `item-${checkoutId}`,
                         title: `Ingressos para evento ${input.checkout.metadata?.eventId || "Verano Talk"}`,
-                        unit_price: checkout.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets),
-                        // unit_price: checkout.totalAmount,
+                        unit_price: checkout.totalAmount,
                         quantity: 1,
                     },
                 ],
@@ -106,6 +113,13 @@ class CreateCheckoutUseCase {
                 ? error
                 : new errors_1.InternalServerError("Falha ao criar checkout");
         }
+    }
+    calculateTotalAmount(fullTickets, halfTickets) {
+        const valueTicketAll = process.env.BASE_TICKET_PRICE;
+        const valueTicketHalf = process.env.HALF_TICKET_PRICE;
+        const totalAmount = fullTickets * Number(valueTicketAll) +
+            halfTickets * Number(valueTicketHalf);
+        return totalAmount;
     }
 }
 exports.CreateCheckoutUseCase = CreateCheckoutUseCase;

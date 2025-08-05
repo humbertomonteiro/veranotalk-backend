@@ -4,8 +4,6 @@ import {
   CreateCheckoutInput,
   WebhookMercadoPagoInput,
 } from "../../../domain/usecases";
-import { MercadoPagoProva } from "../../../../prova/MercadoPagoProva";
-
 export class CheckoutController {
   constructor(private readonly checkoutService: CheckoutService) {}
 

@@ -12,6 +12,6 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
-  "include": ["src/**/*", "prova/WebhookProva.ts", "prova/MercadoPagoProva.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

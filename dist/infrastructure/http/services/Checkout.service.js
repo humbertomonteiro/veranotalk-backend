@@ -10,8 +10,11 @@ class CheckoutService {
     async createCheckout(input) {
         return this.createCheckoutUseCase.execute(input);
     }
-    async handleWebhook(input) {
-        await this.webhookUseCase.execute(input);
+    async handleWebhook(input, xSignature, xRequestId, dataIdUrl) {
+        if (!xSignature || !xRequestId || !dataIdUrl) {
+            throw new Error("Missing headers or query params");
+        }
+        await this.webhookUseCase.execute(input, xSignature, xRequestId, dataIdUrl);
     }
     async getCheckoutById(checkoutId) {
         const checkout = await this.checkoutRepository.findById(checkoutId);

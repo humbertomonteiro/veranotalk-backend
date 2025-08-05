@@ -14,14 +14,12 @@ class Checkout {
                 ...props.metadata,
             },
         };
-        this.valueFullTickets = 499;
-        this.valueHalfTickets = 249.9;
         this.validate();
     }
     validate() {
         const errors = [];
-        if (this.totalAmount <= 0) {
-            errors.push("Valor total deve ser maior que zero");
+        if (this.fullTickets <= 0 && this.halfTickets <= 0) {
+            throw new CheckoutError("Tickets empty");
         }
         if (errors.length > 0) {
             throw new CheckoutError(errors.join(" | "));
@@ -32,7 +30,7 @@ class Checkout {
         return this.props.id;
     }
     get totalAmount() {
-        return this.props.totalAmount;
+        return this.props.totalAmount || null;
     }
     get status() {
         return this.props.status;
@@ -85,10 +83,9 @@ class Checkout {
         this.props.payer = payer;
         this.props.updatedAt = new Date();
     }
-    calculateTotalAmount(fullTickets, halfTickets) {
-        // const totalTickets = fullTickets + halfTickets;
-        const totalAmount = fullTickets * this.valueFullTickets + halfTickets * this.valueHalfTickets;
-        return totalAmount;
+    setTotalAmount(value) {
+        this.props.totalAmount = value;
+        this.props.updatedAt = new Date();
     }
     // Métodos de domínio
     startProcessing() {
