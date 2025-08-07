@@ -120,13 +120,7 @@ export class CreateCheckoutUseCase {
           email: participants[0]?.email || "no-reply@veranotalk.com",
         },
         payment_methods: {
-          installments: 10,
-          payer_costs: [
-            {
-              payment_method_id: "",
-              installments: [3, 6, 12],
-            },
-          ],
+          installments: 12,
         },
         external_reference: checkoutId,
         back_urls: {
