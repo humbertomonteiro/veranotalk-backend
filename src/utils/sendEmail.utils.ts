@@ -82,11 +82,11 @@ Olá ${participant.name},
 Seu pagamento para o evento ${eventName} foi aprovado!
 
 Checkout ID: ${checkout.id}
-Evento: São Luís - Maranhão, 16/10/2025 - Das 09h às 21h
+Evento: São Luís - Maranhão, 16/10/2025 - Das 09h às 20h
 
 Acesse a Área do Participante para visualizar seu ingresso, atualizações do evento e informações importantes: ${participantAreaUrl}
 
-Dúvidas? Entre em contato: suporte@veranotalk.com.br
+Dúvidas? Entre em contato: veranotalk@gmail.com
 
 © 2025 VeranoTalk. Todos os direitos reservados.
 `;
