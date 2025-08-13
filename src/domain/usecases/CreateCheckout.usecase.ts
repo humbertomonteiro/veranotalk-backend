@@ -5,10 +5,12 @@ import {
   CheckoutStatus,
   Participant,
   ParticipantProps,
+  Coupon,
 } from "../entities";
 import {
   CheckoutRepository,
   ParticipantRepository,
+  CouponRepository,
 } from "../interfaces/repositories";
 import { InternalServerError, ValidationError } from "../../utils/errors";
 import { config } from "dotenv";
@@ -32,7 +34,7 @@ interface CreateCheckoutInput {
   checkout: Omit<
     CheckoutProps,
     "status" | "createdAt" | "updatedAt" | "mercadoPagoId" | "paymentMethod"
-  >;
+  > & { couponCode?: string }; // Adiciona couponCode ao input
 }
 
 interface CreateCheckoutOutput {
@@ -45,7 +47,8 @@ interface CreateCheckoutOutput {
 export class CreateCheckoutUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
-    private participantRepository: ParticipantRepository
+    private participantRepository: ParticipantRepository,
+    private couponRepository: CouponRepository // Adiciona CouponRepository
   ) {}
 
   async execute(input: CreateCheckoutInput): Promise<CreateCheckoutOutput> {
@@ -57,10 +60,38 @@ export class CreateCheckoutUseCase {
         throw new ValidationError("Pelo menos um participante é obrigatório");
       }
 
-      // Criar checkout primeiro
+      // Calcular o valor total antes do desconto
+      const originalAmount = this.calculateTotalAmount(
+        input.checkout.fullTickets,
+        input.checkout.halfTickets
+      );
+
+      // Validar e aplicar cupom, se fornecido
+      let totalAmount = originalAmount;
+      let discountAmount = 0;
+      let coupon: Coupon | null = null;
+      if (input.checkout.couponCode) {
+        coupon = await this.couponRepository.findByCode(
+          input.checkout.couponCode
+        );
+        if (!coupon) {
+          throw new ValidationError("Cupom inválido");
+        }
+        coupon.isValid(input.checkout.metadata?.eventId); // Valida expiração, usos e evento
+        totalAmount = coupon.apply(originalAmount);
+        discountAmount = originalAmount - totalAmount;
+        coupon.incrementUses(); // Incrementa usos
+        await this.couponRepository.update(coupon); // Atualiza no Firestore
+      }
+
+      // Criar checkout com informações do cupom
       const checkoutProps: CheckoutProps = {
         ...input.checkout,
         status: "pending",
+        totalAmount,
+        originalAmount,
+        discountAmount,
+        couponCode: coupon?.code || null,
         metadata: {
           participantIds: [],
           eventId: input.checkout.metadata?.eventId || "verano-talk",
@@ -94,12 +125,6 @@ export class CreateCheckoutUseCase {
 
       // Atualizar checkout com participantIds
       checkout.addParticipants(participantIds);
-      checkout.setTotalAmount(
-        this.calculateTotalAmount(
-          input.checkout.fullTickets,
-          input.checkout.halfTickets
-        )
-      );
       checkout.startProcessing();
       await this.checkoutRepository.update(checkout);
       console.log(`Checkout atualizado para processing: ${checkoutId}`);
@@ -112,7 +137,7 @@ export class CreateCheckoutUseCase {
             title: `Ingressos para evento ${
               input.checkout.metadata?.eventId || "Verano Talk"
             }`,
-            unit_price: checkout.totalAmount!,
+            unit_price: checkout.totalAmount!, // Usa valor com desconto
             quantity: 1,
           },
         ],
@@ -177,14 +202,9 @@ export class CreateCheckoutUseCase {
   }
 
   private calculateTotalAmount(fullTickets: number, halfTickets: number) {
-    const valueTicketAll = process.env.BASE_TICKET_PRICE;
-    const valueTicketHalf = process.env.HALF_TICKET_PRICE;
-
-    const totalAmount =
-      fullTickets * Number(valueTicketAll) +
-      halfTickets * Number(valueTicketHalf);
-
-    return totalAmount;
+    const valueTicketAll = Number(process.env.BASE_TICKET_PRICE) || 499;
+    const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
+    return fullTickets * valueTicketAll + halfTickets * valueTicketHalf;
   }
 }
 

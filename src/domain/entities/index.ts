@@ -1,5 +1,6 @@
 import { Checkout, CheckoutProps, CheckoutStatus } from "./Checkout";
 import { Participant, ParticipantProps } from "./Participant";
+import { Coupon, CouponProps } from "./Coupon";
 
 export {
   Checkout,
@@ -7,4 +8,6 @@ export {
   CheckoutStatus,
   Participant,
   ParticipantProps,
+  Coupon,
+  CouponProps,
 };

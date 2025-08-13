@@ -1,8 +1,14 @@
 import express, { Request, Response } from "express";
-import { CheckoutController } from "./infrastructure/http/controllers/Checkout.controller";
-import { CheckoutService } from "./infrastructure/http/services/Checkout.service";
-import { ParticipantController } from "./infrastructure/http/controllers/Participant.controller";
-import { ParticipantService } from "./infrastructure/http/services/Participant.service";
+import {
+  CheckoutController,
+  ParticipantController,
+  CouponController,
+} from "./infrastructure/http/controllers";
+import {
+  CheckoutService,
+  ParticipantService,
+  CouponService,
+} from "./infrastructure/http/services";
 import {
   CreateCheckoutUseCase,
   WebhookMercadoPagoUseCase,
@@ -13,6 +19,8 @@ import {
 
 import { FirebaseCheckoutRepository } from "./infrastructure/repositories";
 import { FirebaseParticipantRepository } from "./infrastructure/repositories";
+import { FirebaseCouponRepository } from "./infrastructure/repositories";
+
 import cors from "cors";
 import { config } from "dotenv";
 config();
@@ -25,9 +33,12 @@ app.use(express.json());
 // Configurar dependências
 const checkoutRepository = new FirebaseCheckoutRepository();
 const participantRepository = new FirebaseParticipantRepository();
+const couponRepository = new FirebaseCouponRepository();
+
 const createCheckoutUseCase = new CreateCheckoutUseCase(
   checkoutRepository,
-  participantRepository
+  participantRepository,
+  couponRepository
 );
 const webhookUseCase = new WebhookMercadoPagoUseCase(
   checkoutRepository,
@@ -38,7 +49,9 @@ const checkoutService = new CheckoutService(
   webhookUseCase,
   checkoutRepository
 );
+const couponService = new CouponService(couponRepository);
 const checkoutController = new CheckoutController(checkoutService);
+const couponController = new CouponController(couponService);
 const participantService = new ParticipantService(
   participantRepository,
   checkoutRepository
@@ -65,6 +78,9 @@ app.get(
   "/participant/:participantId/certificate",
   (req: Request, res: Response) =>
     participantController.getCertificate(req, res)
+);
+app.post("/coupons/validate", (req: Request, res: Response) =>
+  couponController.validateCoupon(req, res)
 );
 
 const PORT = process.env.PORT || 3000;
