@@ -24,6 +24,9 @@ export interface CheckoutProps {
   halfTickets: number;
   createdAt?: Date;
   updatedAt?: Date;
+  couponCode?: string | null;
+  discountAmount?: number | null;
+  originalAmount?: number | null;
   metadata?: {
     error?: string;
     retryCount?: number;
@@ -41,6 +44,9 @@ export class Checkout {
       status: props.status ?? "pending",
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
+      couponCode: props.couponCode ?? null,
+      discountAmount: props.discountAmount ?? null,
+      originalAmount: props.originalAmount ?? null,
       metadata: {
         retryCount: 0,
         participantIds: [],
@@ -76,10 +82,6 @@ export class Checkout {
     return this.props.status;
   }
 
-  // get orderId(): string | undefined {
-  //   return this.props.orderId;
-  // }
-
   get paymentMethod(): string | null {
     return this.props.paymentMethod ?? null;
   }
@@ -110,6 +112,18 @@ export class Checkout {
 
   get updatedAt(): Date {
     return this.props.updatedAt!;
+  }
+
+  get couponCode(): string | null {
+    return this.props.couponCode ?? null;
+  }
+
+  get discountAmount(): number | null {
+    return this.props.discountAmount ?? null;
+  }
+
+  get originalAmount(): number | null {
+    return this.props.originalAmount ?? null;
   }
 
   get metadata() {
@@ -145,6 +159,40 @@ export class Checkout {
   setTotalAmount(value: number) {
     this.props.totalAmount = value;
     this.props.updatedAt = new Date();
+  }
+
+  applyCoupon(
+    couponCode: string,
+    discountAmount: number,
+    originalAmount: number
+  ): void {
+    if (this.status !== "pending") {
+      throw new CheckoutError(
+        "Cupom só pode ser aplicado em checkouts pendentes"
+      );
+    }
+    this.props.couponCode = couponCode;
+    this.props.discountAmount = discountAmount;
+    this.props.originalAmount = originalAmount;
+    this.props.totalAmount = originalAmount - discountAmount;
+    this.props.updatedAt = new Date();
+    this.validate();
+  }
+
+  // Novo: Método para remover cupom
+  removeCoupon(): void {
+    if (this.status !== "pending") {
+      throw new CheckoutError(
+        "Cupom só pode ser removido em checkouts pendentes"
+      );
+    }
+    this.props.couponCode = null;
+    this.props.discountAmount = null;
+    this.props.totalAmount =
+      this.props.originalAmount || this.props.totalAmount;
+    this.props.originalAmount = null;
+    this.props.updatedAt = new Date();
+    this.validate();
   }
 
   // Métodos de domínio
@@ -217,6 +265,9 @@ export class Checkout {
       halfTickets: this.halfTickets,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      couponCode: this.couponCode,
+      discountAmount: this.discountAmount,
+      originalAmount: this.originalAmount,
       metadata: this.metadata.error
         ? { ...this.metadata, error: "Erro no processamento" }
         : this.metadata,
@@ -244,6 +295,9 @@ export type CheckoutDTO = {
   halfTickets?: number;
   createdAt: Date;
   updatedAt: Date;
+  couponCode?: string | null;
+  discountAmount?: number | null;
+  originalAmount?: number | null;
   metadata?: {
     error?: string;
     retryCount?: number;

@@ -34,7 +34,7 @@ interface CreateCheckoutInput {
   checkout: Omit<
     CheckoutProps,
     "status" | "createdAt" | "updatedAt" | "mercadoPagoId" | "paymentMethod"
-  > & { couponCode?: string }; // Adiciona couponCode ao input
+  > & { couponCode?: string };
 }
 
 interface CreateCheckoutOutput {
@@ -48,7 +48,7 @@ export class CreateCheckoutUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
     private participantRepository: ParticipantRepository,
-    private couponRepository: CouponRepository // Adiciona CouponRepository
+    private couponRepository: CouponRepository
   ) {}
 
   async execute(input: CreateCheckoutInput): Promise<CreateCheckoutOutput> {

@@ -18,9 +18,10 @@ const mercadoPagoClient = new mercadopago_1.MercadoPagoConfig({
 });
 const preferenceClient = new mercadopago_1.Preference(mercadoPagoClient);
 class CreateCheckoutUseCase {
-    constructor(checkoutRepository, participantRepository) {
+    constructor(checkoutRepository, participantRepository, couponRepository) {
         this.checkoutRepository = checkoutRepository;
         this.participantRepository = participantRepository;
+        this.couponRepository = couponRepository;
     }
     async execute(input) {
         let checkout;
@@ -29,10 +30,31 @@ class CreateCheckoutUseCase {
             if (!input.participants.length) {
                 throw new errors_1.ValidationError("Pelo menos um participante é obrigatório");
             }
-            // Criar checkout primeiro
+            // Calcular o valor total antes do desconto
+            const originalAmount = this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets);
+            // Validar e aplicar cupom, se fornecido
+            let totalAmount = originalAmount;
+            let discountAmount = 0;
+            let coupon = null;
+            if (input.checkout.couponCode) {
+                coupon = await this.couponRepository.findByCode(input.checkout.couponCode);
+                if (!coupon) {
+                    throw new errors_1.ValidationError("Cupom inválido");
+                }
+                coupon.isValid(input.checkout.metadata?.eventId); // Valida expiração, usos e evento
+                totalAmount = coupon.apply(originalAmount);
+                discountAmount = originalAmount - totalAmount;
+                coupon.incrementUses(); // Incrementa usos
+                await this.couponRepository.update(coupon); // Atualiza no Firestore
+            }
+            // Criar checkout com informações do cupom
             const checkoutProps = {
                 ...input.checkout,
                 status: "pending",
+                totalAmount,
+                originalAmount,
+                discountAmount,
+                couponCode: coupon?.code || null,
                 metadata: {
                     participantIds: [],
                     eventId: input.checkout.metadata?.eventId || "verano-talk",
@@ -57,7 +79,6 @@ class CreateCheckoutUseCase {
             }
             // Atualizar checkout com participantIds
             checkout.addParticipants(participantIds);
-            checkout.setTotalAmount(this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets));
             checkout.startProcessing();
             await this.checkoutRepository.update(checkout);
             console.log(`Checkout atualizado para processing: ${checkoutId}`);
@@ -67,12 +88,15 @@ class CreateCheckoutUseCase {
                     {
                         id: `item-${checkoutId}`,
                         title: `Ingressos para evento ${input.checkout.metadata?.eventId || "Verano Talk"}`,
-                        unit_price: checkout.totalAmount,
+                        unit_price: checkout.totalAmount, // Usa valor com desconto
                         quantity: 1,
                     },
                 ],
                 payer: {
                     email: participants[0]?.email || "no-reply@veranotalk.com",
+                },
+                payment_methods: {
+                    installments: 12,
                 },
                 external_reference: checkoutId,
                 back_urls: {
@@ -115,11 +139,9 @@ class CreateCheckoutUseCase {
         }
     }
     calculateTotalAmount(fullTickets, halfTickets) {
-        const valueTicketAll = process.env.BASE_TICKET_PRICE;
-        const valueTicketHalf = process.env.HALF_TICKET_PRICE;
-        const totalAmount = fullTickets * Number(valueTicketAll) +
-            halfTickets * Number(valueTicketHalf);
-        return totalAmount;
+        const valueTicketAll = Number(process.env.BASE_TICKET_PRICE) || 499;
+        const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
+        return fullTickets * valueTicketAll + halfTickets * valueTicketHalf;
     }
 }
 exports.CreateCheckoutUseCase = CreateCheckoutUseCase;

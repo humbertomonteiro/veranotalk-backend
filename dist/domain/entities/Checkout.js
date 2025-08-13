@@ -8,6 +8,9 @@ class Checkout {
             status: props.status ?? "pending",
             createdAt: props.createdAt ?? new Date(),
             updatedAt: props.updatedAt ?? new Date(),
+            couponCode: props.couponCode ?? null,
+            discountAmount: props.discountAmount ?? null,
+            originalAmount: props.originalAmount ?? null,
             metadata: {
                 retryCount: 0,
                 participantIds: [],
@@ -35,9 +38,6 @@ class Checkout {
     get status() {
         return this.props.status;
     }
-    // get orderId(): string | undefined {
-    //   return this.props.orderId;
-    // }
     get paymentMethod() {
         return this.props.paymentMethod ?? null;
     }
@@ -61,6 +61,15 @@ class Checkout {
     }
     get updatedAt() {
         return this.props.updatedAt;
+    }
+    get couponCode() {
+        return this.props.couponCode ?? null;
+    }
+    get discountAmount() {
+        return this.props.discountAmount ?? null;
+    }
+    get originalAmount() {
+        return this.props.originalAmount ?? null;
     }
     get metadata() {
         return this.props.metadata ?? {};
@@ -86,6 +95,30 @@ class Checkout {
     setTotalAmount(value) {
         this.props.totalAmount = value;
         this.props.updatedAt = new Date();
+    }
+    applyCoupon(couponCode, discountAmount, originalAmount) {
+        if (this.status !== "pending") {
+            throw new CheckoutError("Cupom só pode ser aplicado em checkouts pendentes");
+        }
+        this.props.couponCode = couponCode;
+        this.props.discountAmount = discountAmount;
+        this.props.originalAmount = originalAmount;
+        this.props.totalAmount = originalAmount - discountAmount;
+        this.props.updatedAt = new Date();
+        this.validate();
+    }
+    // Novo: Método para remover cupom
+    removeCoupon() {
+        if (this.status !== "pending") {
+            throw new CheckoutError("Cupom só pode ser removido em checkouts pendentes");
+        }
+        this.props.couponCode = null;
+        this.props.discountAmount = null;
+        this.props.totalAmount =
+            this.props.originalAmount || this.props.totalAmount;
+        this.props.originalAmount = null;
+        this.props.updatedAt = new Date();
+        this.validate();
     }
     // Métodos de domínio
     startProcessing() {
@@ -149,6 +182,9 @@ class Checkout {
             halfTickets: this.halfTickets,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
+            couponCode: this.couponCode,
+            discountAmount: this.discountAmount,
+            originalAmount: this.originalAmount,
             metadata: this.metadata.error
                 ? { ...this.metadata, error: "Erro no processamento" }
                 : this.metadata,
