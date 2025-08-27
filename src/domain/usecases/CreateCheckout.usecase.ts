@@ -63,7 +63,8 @@ export class CreateCheckoutUseCase {
       // Calcular o valor total antes do desconto
       const originalAmount = this.calculateTotalAmount(
         input.checkout.fullTickets,
-        input.checkout.halfTickets
+        input.checkout.halfTickets,
+        input.checkout.metadata?.ticketType
       );
 
       // Validar e aplicar cupom, se fornecido
@@ -95,6 +96,7 @@ export class CreateCheckoutUseCase {
         metadata: {
           participantIds: [],
           eventId: input.checkout.metadata?.eventId || "verano-talk",
+          ticketType: input.checkout.metadata?.ticketType || "1",
         },
       };
       checkout = new Checkout(checkoutProps);
@@ -201,10 +203,21 @@ export class CreateCheckoutUseCase {
     }
   }
 
-  private calculateTotalAmount(fullTickets: number, halfTickets: number) {
-    const valueTicketAll = Number(process.env.BASE_TICKET_PRICE) || 499;
+  private calculateTotalAmount(
+    fullTickets: number,
+    halfTickets: number,
+    ticketType?: string
+  ) {
+    const basePrice =
+      ticketType === "1"
+        ? 499
+        : ticketType === "2"
+        ? 399
+        : ticketType === "3"
+        ? 799
+        : 499;
     const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
-    return fullTickets * valueTicketAll + halfTickets * valueTicketHalf;
+    return fullTickets * basePrice + halfTickets * valueTicketHalf;
   }
 }
 

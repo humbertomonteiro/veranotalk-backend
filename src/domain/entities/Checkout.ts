@@ -32,6 +32,9 @@ export interface CheckoutProps {
     retryCount?: number;
     participantIds?: string[];
     eventId?: string;
+    manualPayment?: boolean;
+    processedBy?: string;
+    ticketType?: string;
   };
 }
 

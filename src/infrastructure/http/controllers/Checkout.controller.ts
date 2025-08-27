@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { CheckoutService } from "../services/Checkout.service";
 import {
   CreateCheckoutInput,
+  CreateManualCheckoutInput,
   WebhookMercadoPagoInput,
 } from "../../../domain/usecases";
 export class CheckoutController {
@@ -19,6 +20,34 @@ export class CheckoutController {
       }
 
       const result = await this.checkoutService.createCheckout(input);
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({
+        error: error instanceof Error ? error.message : "Erro desconhecido",
+      });
+    }
+  }
+
+  async createManualCheckout(req: Request, res: Response): Promise<void> {
+    try {
+      const input: CreateManualCheckoutInput = req.body;
+
+      if (!input.participants || !input.checkout) {
+        res.status(400).json({
+          error: "Dados de participantes e checkout são obrigatórios",
+        });
+        return;
+      }
+
+      // Validação adicional para checkout manual
+      if (!input.checkout.paymentMethod) {
+        res.status(400).json({
+          error: "Método de pagamento é obrigatório para checkout manual",
+        });
+        return;
+      }
+
+      const result = await this.checkoutService.createManualCheckout(input);
       res.status(201).json(result);
     } catch (error) {
       res.status(400).json({

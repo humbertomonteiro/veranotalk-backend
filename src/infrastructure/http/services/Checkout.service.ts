@@ -4,6 +4,9 @@ import {
   CreateCheckoutOutput,
   WebhookMercadoPagoUseCase,
   WebhookMercadoPagoInput,
+  CreateManualCheckoutInput,
+  CreateManualCheckoutOutput,
+  CreateManualCheckoutUseCase,
 } from "../../../domain/usecases";
 import { FirebaseCheckoutRepository } from "../../repositories";
 import { Checkout } from "../../../domain/entities";
@@ -11,6 +14,7 @@ import { Checkout } from "../../../domain/entities";
 export class CheckoutService {
   constructor(
     private readonly createCheckoutUseCase: CreateCheckoutUseCase,
+    private readonly createManualCheckoutUseCase: CreateManualCheckoutUseCase,
     private readonly webhookUseCase: WebhookMercadoPagoUseCase,
     private readonly checkoutRepository: FirebaseCheckoutRepository
   ) {}
@@ -19,6 +23,12 @@ export class CheckoutService {
     input: CreateCheckoutInput
   ): Promise<CreateCheckoutOutput> {
     return this.createCheckoutUseCase.execute(input);
+  }
+
+  async createManualCheckout(
+    input: CreateManualCheckoutInput
+  ): Promise<CreateManualCheckoutOutput> {
+    return this.createManualCheckoutUseCase.execute(input);
   }
 
   async handleWebhook(

@@ -293,3 +293,17 @@
 {"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:52"}
 {"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:52"}
 {"level":"error","message":"Assinatura inválida","timestamp":"2025-08-05 11:20:53"}
+{"level":"info","message":"Webhook verificado com sucesso","timestamp":"2025-08-19 10:40:40"}
+{"action":"payment.created","level":"info","mercadoPagoId":"122901001946","message":"Processando webhook","timestamp":"2025-08-19 10:40:40"}
+{"externalReference":"2hFXqVyyMyw1v9mcE791","level":"info","message":"External Reference obtido","timestamp":"2025-08-19 10:40:40"}
+{"checkoutId":"2hFXqVyyMyw1v9mcE791","externalReference":"2hFXqVyyMyw1v9mcE791","level":"info","mercadoPagoId":"122901001946","message":"Checkout encontrado","payerDocument":"","payerName":"Desconhecido","paymentMethod":"pix","timestamp":"2025-08-19 10:40:41"}
+{"checkoutId":"2hFXqVyyMyw1v9mcE791","level":"info","mercadoPagoId":"122901001946","message":"Checkout atualizado com mercadoPagoId","timestamp":"2025-08-19 10:40:41"}
+{"checkoutId":"2hFXqVyyMyw1v9mcE791","level":"info","message":"Checkout atualizado com paymentMethod","paymentMethod":"pix","timestamp":"2025-08-19 10:40:41"}
+{"checkoutId":"2hFXqVyyMyw1v9mcE791","level":"info","message":"Checkout atualizado com payer","payerDocument":"","payerName":"Desconhecido","timestamp":"2025-08-19 10:40:41"}
+{"checkoutId":"2hFXqVyyMyw1v9mcE791","level":"info","mercadoPagoId":"122901001946","message":"Checkout atualizado","payerDocument":"","payerName":"Desconhecido","paymentMethod":"pix","status":"pending","timestamp":"2025-08-19 10:40:41"}
+{"level":"info","message":"Checkout manual salvo com ID: WDgqNTCp4hvLvF70K7B1","timestamp":"2025-08-26 19:22:21"}
+{"level":"info","message":"Checkout manual atualizado com participantes: WDgqNTCp4hvLvF70K7B1","timestamp":"2025-08-26 19:22:21"}
+{"checkoutId":"WDgqNTCp4hvLvF70K7B1","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-08-26 19:22:21","totalParticipants":1}
+{"checkoutId":"WDgqNTCp4hvLvF70K7B1","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-08-26 19:22:25"}
+{"checkoutId":"WDgqNTCp4hvLvF70K7B1","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-26 19:22:25"}
+{"checkoutId":"WDgqNTCp4hvLvF70K7B1","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-26 19:22:25","total":1}

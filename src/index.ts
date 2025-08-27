@@ -11,6 +11,7 @@ import {
 } from "./infrastructure/http/services";
 import {
   CreateCheckoutUseCase,
+  CreateManualCheckoutUseCase,
   WebhookMercadoPagoUseCase,
 } from "./domain/usecases";
 
@@ -40,12 +41,17 @@ const createCheckoutUseCase = new CreateCheckoutUseCase(
   participantRepository,
   couponRepository
 );
+const createManualCheckoutUseCase = new CreateManualCheckoutUseCase(
+  checkoutRepository,
+  participantRepository
+);
 const webhookUseCase = new WebhookMercadoPagoUseCase(
   checkoutRepository,
   participantRepository
 );
 const checkoutService = new CheckoutService(
   createCheckoutUseCase,
+  createManualCheckoutUseCase,
   webhookUseCase,
   checkoutRepository
 );
@@ -61,6 +67,9 @@ const participantController = new ParticipantController(participantService);
 // Rotas
 app.post("/checkout", (req: Request, res: Response) =>
   checkoutController.createCheckout(req, res)
+);
+app.post("/checkout/manual", (req: Request, res: Response) =>
+  checkoutController.createManualCheckout(req, res)
 );
 app.post("/webhook/mercadopago", (req: Request, res: Response) =>
   checkoutController.handleWebhook(req, res)
@@ -83,7 +92,7 @@ app.post("/coupons/validate", (req: Request, res: Response) =>
   couponController.validateCoupon(req, res)
 );
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

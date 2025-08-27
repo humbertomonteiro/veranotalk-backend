@@ -7,6 +7,11 @@ import {
   WebhookMercadoPagoUseCase,
   WebhookMercadoPagoInput,
 } from "./WebhookMercadoPago.usecase";
+import {
+  CreateManualCheckoutUseCase,
+  CreateManualCheckoutInput,
+  CreateManualCheckoutOutput,
+} from "./CreateCheckoutManual.usecase";
 
 export {
   CreateCheckoutUseCase,
@@ -14,4 +19,7 @@ export {
   CreateCheckoutOutput,
   WebhookMercadoPagoUseCase,
   WebhookMercadoPagoInput,
+  CreateManualCheckoutUseCase,
+  CreateManualCheckoutInput,
+  CreateManualCheckoutOutput,
 };
