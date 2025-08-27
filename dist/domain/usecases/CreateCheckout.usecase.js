@@ -30,22 +30,31 @@ class CreateCheckoutUseCase {
             if (!input.participants.length) {
                 throw new errors_1.ValidationError("Pelo menos um participante é obrigatório");
             }
+            // Validar número mínimo de ingressos para lote 2
+            if (input.checkout.metadata?.ticketType === "2" &&
+                input.checkout.fullTickets < 5) {
+                throw new errors_1.ValidationError("Mínimo de 5 ingressos para o lote de grupo");
+            }
             // Calcular o valor total antes do desconto
-            const originalAmount = this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets);
+            const originalAmount = this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets, input.checkout.metadata?.ticketType);
             // Validar e aplicar cupom, se fornecido
             let totalAmount = originalAmount;
             let discountAmount = 0;
             let coupon = null;
             if (input.checkout.couponCode) {
+                // Proibir cupons para 5 ou mais ingressos
+                if (input.checkout.fullTickets >= 5) {
+                    throw new errors_1.ValidationError("Cupons não são permitidos para 5 ou mais ingressos");
+                }
                 coupon = await this.couponRepository.findByCode(input.checkout.couponCode);
                 if (!coupon) {
                     throw new errors_1.ValidationError("Cupom inválido");
                 }
-                coupon.isValid(input.checkout.metadata?.eventId); // Valida expiração, usos e evento
+                coupon.isValid(input.checkout.metadata?.eventId);
                 totalAmount = coupon.apply(originalAmount);
                 discountAmount = originalAmount - totalAmount;
-                coupon.incrementUses(); // Incrementa usos
-                await this.couponRepository.update(coupon); // Atualiza no Firestore
+                coupon.incrementUses();
+                await this.couponRepository.update(coupon);
             }
             // Criar checkout com informações do cupom
             const checkoutProps = {
@@ -57,7 +66,8 @@ class CreateCheckoutUseCase {
                 couponCode: coupon?.code || null,
                 metadata: {
                     participantIds: [],
-                    eventId: input.checkout.metadata?.eventId || "verano-talk",
+                    eventId: input.checkout.metadata?.eventId || "verano-talk-2025",
+                    ticketType: input.checkout.metadata?.ticketType || "1",
                 },
             };
             checkout = new entities_1.Checkout(checkoutProps);
@@ -68,7 +78,7 @@ class CreateCheckoutUseCase {
             // Criar e salvar participantes com checkoutId
             const participants = input.participants.map((props) => new entities_1.Participant({
                 ...props,
-                eventId: props.eventId || "verano-talk",
+                eventId: props.eventId || "verano-talk-2025",
                 checkoutId: checkoutId || "",
             }));
             const participantIds = [];
@@ -88,7 +98,7 @@ class CreateCheckoutUseCase {
                     {
                         id: `item-${checkoutId}`,
                         title: `Ingressos para evento ${input.checkout.metadata?.eventId || "Verano Talk"}`,
-                        unit_price: checkout.totalAmount, // Usa valor com desconto
+                        unit_price: checkout.totalAmount,
                         quantity: 1,
                     },
                 ],
@@ -138,10 +148,18 @@ class CreateCheckoutUseCase {
                 : new errors_1.InternalServerError("Falha ao criar checkout");
         }
     }
-    calculateTotalAmount(fullTickets, halfTickets) {
-        const valueTicketAll = Number(process.env.BASE_TICKET_PRICE) || 499;
+    calculateTotalAmount(fullTickets, halfTickets, ticketType) {
+        const basePrice = fullTickets >= 5
+            ? 399
+            : ticketType === "1"
+                ? 499
+                : ticketType === "2"
+                    ? 399
+                    : ticketType === "3"
+                        ? 799
+                        : 499;
         const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
-        return fullTickets * valueTicketAll + halfTickets * valueTicketHalf;
+        return fullTickets * basePrice + halfTickets * valueTicketHalf;
     }
 }
 exports.CreateCheckoutUseCase = CreateCheckoutUseCase;

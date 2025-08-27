@@ -2,13 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckoutService = void 0;
 class CheckoutService {
-    constructor(createCheckoutUseCase, webhookUseCase, checkoutRepository) {
+    constructor(createCheckoutUseCase, createManualCheckoutUseCase, webhookUseCase, checkoutRepository) {
         this.createCheckoutUseCase = createCheckoutUseCase;
+        this.createManualCheckoutUseCase = createManualCheckoutUseCase;
         this.webhookUseCase = webhookUseCase;
         this.checkoutRepository = checkoutRepository;
     }
     async createCheckout(input) {
         return this.createCheckoutUseCase.execute(input);
+    }
+    async createManualCheckout(input) {
+        return this.createManualCheckoutUseCase.execute(input);
     }
     async handleWebhook(input, xSignature, xRequestId, dataIdUrl) {
         if (!xSignature || !xRequestId || !dataIdUrl) {

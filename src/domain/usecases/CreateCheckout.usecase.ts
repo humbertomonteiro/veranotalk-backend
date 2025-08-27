@@ -60,6 +60,14 @@ export class CreateCheckoutUseCase {
         throw new ValidationError("Pelo menos um participante é obrigatório");
       }
 
+      // Validar número mínimo de ingressos para lote 2
+      if (
+        input.checkout.metadata?.ticketType === "2" &&
+        input.checkout.fullTickets < 5
+      ) {
+        throw new ValidationError("Mínimo de 5 ingressos para o lote de grupo");
+      }
+
       // Calcular o valor total antes do desconto
       const originalAmount = this.calculateTotalAmount(
         input.checkout.fullTickets,
@@ -72,17 +80,23 @@ export class CreateCheckoutUseCase {
       let discountAmount = 0;
       let coupon: Coupon | null = null;
       if (input.checkout.couponCode) {
+        // Proibir cupons para 5 ou mais ingressos
+        if (input.checkout.fullTickets >= 5) {
+          throw new ValidationError(
+            "Cupons não são permitidos para 5 ou mais ingressos"
+          );
+        }
         coupon = await this.couponRepository.findByCode(
           input.checkout.couponCode
         );
         if (!coupon) {
           throw new ValidationError("Cupom inválido");
         }
-        coupon.isValid(input.checkout.metadata?.eventId); // Valida expiração, usos e evento
+        coupon.isValid(input.checkout.metadata?.eventId);
         totalAmount = coupon.apply(originalAmount);
         discountAmount = originalAmount - totalAmount;
-        coupon.incrementUses(); // Incrementa usos
-        await this.couponRepository.update(coupon); // Atualiza no Firestore
+        coupon.incrementUses();
+        await this.couponRepository.update(coupon);
       }
 
       // Criar checkout com informações do cupom
@@ -95,7 +109,7 @@ export class CreateCheckoutUseCase {
         couponCode: coupon?.code || null,
         metadata: {
           participantIds: [],
-          eventId: input.checkout.metadata?.eventId || "verano-talk",
+          eventId: input.checkout.metadata?.eventId || "verano-talk-2025",
           ticketType: input.checkout.metadata?.ticketType || "1",
         },
       };
@@ -111,7 +125,7 @@ export class CreateCheckoutUseCase {
         (props) =>
           new Participant({
             ...props,
-            eventId: props.eventId || "verano-talk",
+            eventId: props.eventId || "verano-talk-2025",
             checkoutId: checkoutId || "",
           })
       );
@@ -139,7 +153,7 @@ export class CreateCheckoutUseCase {
             title: `Ingressos para evento ${
               input.checkout.metadata?.eventId || "Verano Talk"
             }`,
-            unit_price: checkout.totalAmount!, // Usa valor com desconto
+            unit_price: checkout.totalAmount!,
             quantity: 1,
           },
         ],
@@ -209,7 +223,9 @@ export class CreateCheckoutUseCase {
     ticketType?: string
   ) {
     const basePrice =
-      ticketType === "1"
+      fullTickets >= 5
+        ? 399
+        : ticketType === "1"
         ? 499
         : ticketType === "2"
         ? 399

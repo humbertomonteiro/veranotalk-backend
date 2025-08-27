@@ -23,8 +23,9 @@ const checkoutRepository = new repositories_1.FirebaseCheckoutRepository();
 const participantRepository = new repositories_2.FirebaseParticipantRepository();
 const couponRepository = new repositories_3.FirebaseCouponRepository();
 const createCheckoutUseCase = new usecases_1.CreateCheckoutUseCase(checkoutRepository, participantRepository, couponRepository);
+const createManualCheckoutUseCase = new usecases_1.CreateManualCheckoutUseCase(checkoutRepository, participantRepository);
 const webhookUseCase = new usecases_1.WebhookMercadoPagoUseCase(checkoutRepository, participantRepository);
-const checkoutService = new services_1.CheckoutService(createCheckoutUseCase, webhookUseCase, checkoutRepository);
+const checkoutService = new services_1.CheckoutService(createCheckoutUseCase, createManualCheckoutUseCase, webhookUseCase, checkoutRepository);
 const couponService = new services_1.CouponService(couponRepository);
 const checkoutController = new controllers_1.CheckoutController(checkoutService);
 const couponController = new controllers_1.CouponController(couponService);
@@ -32,13 +33,14 @@ const participantService = new services_1.ParticipantService(participantReposito
 const participantController = new controllers_1.ParticipantController(participantService);
 // Rotas
 app.post("/checkout", (req, res) => checkoutController.createCheckout(req, res));
+app.post("/checkout/manual", (req, res) => checkoutController.createManualCheckout(req, res));
 app.post("/webhook/mercadopago", (req, res) => checkoutController.handleWebhook(req, res));
 app.get("/checkout/:id", (req, res) => checkoutController.getCheckoutById(req, res));
 app.get("/participant/:document", (req, res) => participantController.getParticipantByDocument(req, res));
 app.post("/participant/validate-qr", (req, res) => participantController.validateQRCode(req, res));
 app.get("/participant/:participantId/certificate", (req, res) => participantController.getCertificate(req, res));
 app.post("/coupons/validate", (req, res) => couponController.validateCoupon(req, res));
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
