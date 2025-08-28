@@ -93,8 +93,13 @@ export class CreateCheckoutUseCase {
           throw new ValidationError("Cupom inválido");
         }
         coupon.isValid(input.checkout.metadata?.eventId);
-        totalAmount = coupon.apply(originalAmount);
-        discountAmount = originalAmount - totalAmount;
+        // Calculate discount to match frontend logic
+        if (coupon.discountType === "fixed") {
+          discountAmount = coupon.discountValue * input.checkout.fullTickets;
+        } else if (coupon.discountType === "percentage") {
+          discountAmount = originalAmount * (coupon.discountValue / 100);
+        }
+        totalAmount = Math.max(0, originalAmount - discountAmount);
         coupon.incrementUses();
         await this.couponRepository.update(coupon);
       }
@@ -150,7 +155,7 @@ export class CreateCheckoutUseCase {
         items: [
           {
             id: `item-${checkoutId}`,
-            title: `Ingressos para evento ${
+            title: `${input.checkout.fullTickets} Ingressos para evento ${
               input.checkout.metadata?.eventId || "Verano Talk"
             }`,
             unit_price: checkout.totalAmount!,

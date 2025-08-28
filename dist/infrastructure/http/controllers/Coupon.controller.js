@@ -17,17 +17,8 @@ class CouponController {
                 res.status(404).json({ error: "Cupom inválido ou não encontrado" });
                 return;
             }
-            // Calcular desconto, se totalAmount for fornecido
-            let discountedAmount = input.totalAmount;
-            let discount = 0;
-            if (input.totalAmount !== undefined) {
-                discountedAmount = coupon.apply(input.totalAmount); // Confia na validação da entidade
-                discount = input.totalAmount - discountedAmount;
-            }
             res.status(200).json({
                 coupon: coupon.toDTO(),
-                discountedAmount,
-                discount,
             });
         }
         catch (error) {
