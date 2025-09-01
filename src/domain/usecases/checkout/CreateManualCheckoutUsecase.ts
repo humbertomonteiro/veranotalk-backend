@@ -4,14 +4,14 @@ import {
   CheckoutStatus,
   Participant,
   ParticipantProps,
-} from "../entities";
+} from "../../entities";
 import {
   CheckoutRepository,
   ParticipantRepository,
-} from "../interfaces/repositories";
-import { InternalServerError, ValidationError } from "../../utils/errors";
-import { sendConfirmationEmail } from "../../utils/sendEmail.utils"; // Importar a função de email
-import logger from "../../utils/logger"; // Importar logger para melhor tracking
+} from "../../interfaces/repositories";
+import { InternalServerError, ValidationError } from "../../../utils/errors";
+import { sendConfirmationEmail } from "../../../utils/sendEmail.utils";
+import logger from "../../../utils/logger";
 
 interface CreateManualCheckoutInput {
   participants: ParticipantProps[];

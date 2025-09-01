@@ -7,6 +7,9 @@ import {
   CreateManualCheckoutInput,
   CreateManualCheckoutOutput,
   CreateManualCheckoutUseCase,
+  DeleteCheckoutInput,
+  DeleteCheckoutOutput,
+  DeleteCheckoutUseCase,
 } from "../../../domain/usecases";
 import { FirebaseCheckoutRepository } from "../../repositories";
 import { Checkout } from "../../../domain/entities";
@@ -16,7 +19,8 @@ export class CheckoutService {
     private readonly createCheckoutUseCase: CreateCheckoutUseCase,
     private readonly createManualCheckoutUseCase: CreateManualCheckoutUseCase,
     private readonly webhookUseCase: WebhookMercadoPagoUseCase,
-    private readonly checkoutRepository: FirebaseCheckoutRepository
+    private readonly checkoutRepository: FirebaseCheckoutRepository,
+    private readonly deleteCheckoutUseCase: DeleteCheckoutUseCase
   ) {}
 
   async createCheckout(
@@ -50,5 +54,15 @@ export class CheckoutService {
       throw new Error("Checkout não encontrado");
     }
     return checkout;
+  }
+
+  async deleteCheckout(checkoutId: string): Promise<DeleteCheckoutOutput> {
+    try {
+      const input: DeleteCheckoutInput = { checkoutId };
+      return await this.deleteCheckoutUseCase.execute(input);
+    } catch (error) {
+      console.error(`Erro ao excluir checkout ${checkoutId}:`, error);
+      throw error;
+    }
   }
 }

@@ -61,36 +61,86 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-  async findByUid(uid: string): Promise<User | null> {
+  async findById(userUid: string): Promise<User | null> {
     try {
-      const docRef = doc(db, this.collectionName, uid);
+      const docRef = doc(db, this.collectionName, userUid);
       const docSnap = await getDoc(docRef);
+
       if (!docSnap.exists()) {
-        console.log(`Usuário não encontrado para UID: ${uid}`);
+        console.log(`Usuário não encontrado para ID: ${userUid}`);
         return null;
       }
+
       const data = docSnap.data();
       const createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
       const updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
       const lastLogin = data.lastLogin ? new Date(data.lastLogin) : undefined;
+
       if (isNaN(createdAt.getTime()) || isNaN(updatedAt.getTime())) {
-        console.error(`Datas inválidas no documento ${uid}:`, {
+        console.error(`Datas inválidas no documento ${docSnap.id}:`, {
           createdAt: data.createdAt,
           updatedAt: data.updatedAt,
         });
         return new User({
           ...data,
           id: docSnap.id,
-          uid: docSnap.id,
           createdAt: new Date(),
           updatedAt: new Date(),
           lastLogin,
         } as UserProps);
       }
+
       return new User({
         ...data,
         id: docSnap.id,
-        uid: docSnap.id,
+        createdAt,
+        updatedAt,
+        lastLogin,
+      } as UserProps);
+    } catch (error) {
+      console.error(`Erro ao buscar usuário por ID ${userUid}:`, error);
+      throw new Error("Error fetching user by ID");
+    }
+  }
+
+  async findByUid(uid: string): Promise<User | null> {
+    try {
+      // Cria uma query para buscar documentos onde o campo 'uid' é igual ao fornecido
+      const q = query(
+        collection(db, this.collectionName),
+        where("uid", "==", uid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.log(`Usuário não encontrado para UID: ${uid}`);
+        return null;
+      }
+
+      // Como o UID deve ser único, esperamos apenas um documento
+      const docSnap = querySnapshot.docs[0];
+      const data = docSnap.data();
+      const createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+      const updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
+      const lastLogin = data.lastLogin ? new Date(data.lastLogin) : undefined;
+
+      if (isNaN(createdAt.getTime()) || isNaN(updatedAt.getTime())) {
+        console.error(`Datas inválidas no documento ${docSnap.id}:`, {
+          createdAt: data.createdAt,
+          updatedAt: data.updatedAt,
+        });
+        return new User({
+          ...data,
+          id: docSnap.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          lastLogin,
+        } as UserProps);
+      }
+
+      return new User({
+        ...data,
+        id: docSnap.id,
         createdAt,
         updatedAt,
         lastLogin,
@@ -125,7 +175,6 @@ class FirebaseUserRepository implements UserRepository {
         return new User({
           ...data,
           id: doc.id,
-          uid: doc.id,
           createdAt: new Date(),
           updatedAt: new Date(),
           lastLogin,
@@ -134,7 +183,6 @@ class FirebaseUserRepository implements UserRepository {
       return new User({
         ...data,
         id: doc.id,
-        uid: doc.id,
         createdAt,
         updatedAt,
         lastLogin,
@@ -202,7 +250,6 @@ class FirebaseUserRepository implements UserRepository {
           return new User({
             ...data,
             id: doc.id,
-            uid: doc.id,
             createdAt: new Date(),
             updatedAt: new Date(),
             lastLogin,
@@ -211,7 +258,6 @@ class FirebaseUserRepository implements UserRepository {
         return new User({
           ...data,
           id: doc.id,
-          uid: doc.id,
           createdAt,
           updatedAt,
           lastLogin,
@@ -247,7 +293,6 @@ class FirebaseUserRepository implements UserRepository {
           return new User({
             ...data,
             id: doc.id,
-            uid: doc.id,
             createdAt: new Date(),
             updatedAt: new Date(),
             lastLogin,
@@ -256,7 +301,6 @@ class FirebaseUserRepository implements UserRepository {
         return new User({
           ...data,
           id: doc.id,
-          uid: doc.id,
           createdAt,
           updatedAt,
           lastLogin,

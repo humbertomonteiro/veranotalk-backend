@@ -7,7 +7,6 @@ export interface ParticipantProps {
   eventId: string;
   document: string;
   ticketType: "all" | "half" | "vip";
-  // isHalfPrice: boolean;
   qrCode?: string;
   checkedIn?: boolean;
   createdAt?: Date;

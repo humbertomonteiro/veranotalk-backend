@@ -2,24 +2,21 @@ import {
   CreateCheckoutUseCase,
   CreateCheckoutInput,
   CreateCheckoutOutput,
-} from "./checkout";
-import { WebhookMercadoPagoUseCase, WebhookMercadoPagoInput } from "./checkout";
+} from "./CreateCheckoutUsecase";
 import {
-  CreateManualCheckoutUseCase,
   CreateManualCheckoutInput,
   CreateManualCheckoutOutput,
-} from "./checkout";
+  CreateManualCheckoutUseCase,
+} from "./CreateManualCheckoutUsecase";
 import {
-  ActivateUserUseCase,
-  DeactivateUserUseCase,
-  UpdateLastLoginUseCase,
-} from "./users";
-import { UpdateParticipantUsecase } from "./participant/UpdateParticipantUsecase";
+  WebhookMercadoPagoInput,
+  WebhookMercadoPagoUseCase,
+} from "./WebhookMercadoPagoUsecase";
 import {
   DeleteCheckoutInput,
   DeleteCheckoutOutput,
   DeleteCheckoutUseCase,
-} from "./checkout";
+} from "./DeleteCheckoutUsecase";
 
 export {
   CreateCheckoutUseCase,
@@ -30,10 +27,6 @@ export {
   CreateManualCheckoutUseCase,
   CreateManualCheckoutInput,
   CreateManualCheckoutOutput,
-  ActivateUserUseCase,
-  DeactivateUserUseCase,
-  UpdateLastLoginUseCase,
-  UpdateParticipantUsecase,
   DeleteCheckoutInput,
   DeleteCheckoutOutput,
   DeleteCheckoutUseCase,

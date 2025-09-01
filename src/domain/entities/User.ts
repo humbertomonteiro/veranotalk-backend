@@ -1,7 +1,8 @@
 // backend/src/domain/entities/User.ts
 export interface UserProps {
   id?: string;
-  uid: string;
+  uid?: string;
+  status?: string;
   email: string;
   name: string;
   role: "admin" | "staff" | "viewer";
@@ -29,10 +30,13 @@ export class User {
   get id(): string | undefined {
     return this.props.id;
   }
-  get uid(): string {
+  get uid(): string | undefined {
     return this.props.uid;
   }
-  get email(): string {
+  get status(): string | undefined {
+    return this.props.status;
+  }
+  get email(): string | undefined {
     return this.props.email;
   }
   get name(): string {

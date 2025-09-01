@@ -1,5 +1,11 @@
-import { CheckoutController } from "./Checkout.controller";
-import { CouponController } from "./Coupon.controller";
-import { ParticipantController } from "./Participant.controller";
+import { CheckoutController } from "./CheckoutController";
+import { CouponController } from "./CouponController";
+import { ParticipantController } from "./ParticipantController";
+import { UserController } from "./UserController";
 
-export { CheckoutController, ParticipantController, CouponController };
+export {
+  CheckoutController,
+  ParticipantController,
+  CouponController,
+  UserController,
+};

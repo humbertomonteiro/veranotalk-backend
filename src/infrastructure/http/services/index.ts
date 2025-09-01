@@ -1,6 +1,6 @@
-import { CheckoutService } from "./Checkout.service";
-import { ParticipantService } from "./Participant.service";
-import { CouponService } from "./Coupon.service";
-import { UserService } from "./User.service";
+import { CheckoutService } from "./CheckoutService";
+import { ParticipantService } from "./ParticipantService";
+import { CouponService } from "./CouponService";
+import { UserService } from "./UserService";
 
 export { CheckoutService, ParticipantService, CouponService, UserService };

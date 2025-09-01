@@ -6,13 +6,13 @@ import {
   Participant,
   ParticipantProps,
   Coupon,
-} from "../entities";
+} from "../../entities";
 import {
   CheckoutRepository,
   ParticipantRepository,
   CouponRepository,
-} from "../interfaces/repositories";
-import { InternalServerError, ValidationError } from "../../utils/errors";
+} from "../../interfaces/repositories";
+import { InternalServerError, ValidationError } from "../../../utils/errors";
 import { config } from "dotenv";
 config();
 
@@ -100,8 +100,8 @@ export class CreateCheckoutUseCase {
           discountAmount = originalAmount * (coupon.discountValue / 100);
         }
         totalAmount = Math.max(0, originalAmount - discountAmount);
-        coupon.incrementUses();
-        await this.couponRepository.update(coupon);
+        // coupon.incrementUses();
+        // await this.couponRepository.update(coupon);
       }
 
       // Criar checkout com informações do cupom

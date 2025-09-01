@@ -2,8 +2,23 @@ import {
   ParticipantRepository,
   CheckoutRepository,
 } from "../../../domain/interfaces/repositories";
-import { Participant, Checkout } from "../../../domain/entities";
+import {
+  Participant,
+  Checkout,
+  CheckoutStatus,
+} from "../../../domain/entities";
 import { NotFoundError, ValidationError } from "../../../utils/errors";
+import { UpdateParticipantUsecase } from "../../../domain/usecases";
+
+interface UpdateInput {
+  name?: string;
+  email?: string;
+  phone?: string;
+  ticketType?: string;
+  status?: CheckoutStatus;
+  paymentMethod?: string;
+  totalAmount?: number;
+}
 
 interface ParticipantWithCheckout {
   participant: Participant;
@@ -11,10 +26,16 @@ interface ParticipantWithCheckout {
 }
 
 export class ParticipantService {
+  private updateCheckoutUsecase: UpdateParticipantUsecase;
   constructor(
     private participantRepository: ParticipantRepository,
     private checkoutRepository: CheckoutRepository
-  ) {}
+  ) {
+    this.updateCheckoutUsecase = new UpdateParticipantUsecase(
+      checkoutRepository,
+      participantRepository
+    );
+  }
 
   async getParticipantByDocument(
     document: string
@@ -101,5 +122,42 @@ export class ParticipantService {
 
     const certificateUrl = `https://storage.googleapis.com/veranotalk-certificates/${participantId}.pdf`;
     return { available: true, url: certificateUrl };
+  }
+
+  async updateParticipant(
+    uid: string,
+    input: UpdateInput,
+    repo: "participant" | "checkout" | "both" = "both"
+  ): Promise<{ participant?: Participant; checkout?: Checkout }> {
+    try {
+      // Validate input
+      if (input.email && !/\S+@\S+\.\S+/.test(input.email)) {
+        throw new Error("E-mail inválido");
+      }
+      if (input.name && !input.name.trim()) {
+        throw new Error("Nome não pode estar vazio");
+      }
+      if (
+        input.paymentMethod &&
+        !["pix", "credit_card", "boleto"].includes(input.paymentMethod)
+      ) {
+        throw new Error("Método de pagamento inválido");
+      }
+
+      if (input.totalAmount !== undefined && input.totalAmount < 0) {
+        throw new Error("Valor total não pode ser negativo");
+      }
+
+      const result = await this.updateCheckoutUsecase.execute(uid, repo, input);
+      return result;
+    } catch (error) {
+      console.error(
+        `Erro ao atualizar participante/checkout com UID ${uid}:`,
+        error
+      );
+      throw error instanceof Error
+        ? error
+        : new Error("Failed to update participant/checkout");
+    }
   }
 }

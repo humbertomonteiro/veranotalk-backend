@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CheckoutService } from "../services/Checkout.service";
+import { CheckoutService } from "../services/CheckoutService";
 import {
   CreateCheckoutInput,
   CreateManualCheckoutInput,
@@ -99,6 +99,31 @@ export class CheckoutController {
         .json({
           error:
             error instanceof Error ? error.message : "Erro ao buscar checkout",
+        });
+    }
+  }
+
+  async deleteCheckout(req: Request, res: Response): Promise<void> {
+    try {
+      const checkoutId = req.params.id;
+      if (!checkoutId) {
+        res.status(400).json({ error: "ID do checkout é obrigatório" });
+        return;
+      }
+
+      const result = await this.checkoutService.deleteCheckout(checkoutId);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error(`Erro ao excluir checkout ${req.params.id}:`, error);
+      res
+        .status(
+          error instanceof Error && error.message.includes("não encontrado")
+            ? 404
+            : 500
+        )
+        .json({
+          error:
+            error instanceof Error ? error.message : "Erro ao excluir checkout",
         });
     }
   }

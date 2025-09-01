@@ -2,10 +2,11 @@ import { MercadoPagoConfig, Payment } from "mercadopago";
 import {
   CheckoutRepository,
   ParticipantRepository,
-} from "../interfaces/repositories";
-import { CheckoutStatus, Checkout } from "../entities";
-import { sendConfirmationEmail } from "../../utils/sendEmail.utils";
-import logger from "../../utils/logger";
+  CouponRepository,
+} from "../../interfaces/repositories";
+import { CheckoutStatus, Checkout } from "../../entities";
+import { sendConfirmationEmail } from "../../../utils/sendEmail.utils";
+import logger from "../../../utils/logger";
 import crypto from "crypto";
 import { config } from "dotenv";
 config();
@@ -35,7 +36,8 @@ const webhookSecret = production
 class WebhookMercadoPagoUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
-    private participantRepository: ParticipantRepository
+    private participantRepository: ParticipantRepository,
+    private couponRepository: CouponRepository
   ) {}
 
   async execute(
@@ -198,6 +200,25 @@ class WebhookMercadoPagoUseCase {
             if (!checkout.id) {
               logger.error("Checkout id não encontrado", { mercadoPagoId });
               throw new Error("Checkout id not found");
+            }
+
+            if (checkout.couponCode) {
+              const coupon = await this.couponRepository.findByCode(
+                checkout.couponCode
+              );
+              if (coupon) {
+                coupon.incrementUses();
+                await this.couponRepository.update(coupon);
+                logger.info("Coupon usage incremented", {
+                  couponCode: checkout.couponCode,
+                  checkoutId: checkout.id,
+                });
+              } else {
+                logger.warn("Coupon not found for checkout", {
+                  couponCode: checkout.couponCode,
+                  checkoutId: checkout.id,
+                });
+              }
             }
 
             const participants =

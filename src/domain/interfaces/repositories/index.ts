@@ -1,7 +1,7 @@
-import { CheckoutRepository } from "./CheckoutRepository.interface";
-import { ParticipantRepository } from "./ParticipanteRepository.interface";
-import { CouponRepository } from "./CouponRepository.interface";
-import { UserRepository } from "./UserRepository.interface";
+import { CheckoutRepository } from "./CheckoutRepositoryInterface";
+import { ParticipantRepository } from "./ParticipanteRepositoryInterface";
+import { CouponRepository } from "./CouponRepositoryInterface";
+import { UserRepository } from "./UserRepositoryInterface";
 
 export {
   CheckoutRepository,

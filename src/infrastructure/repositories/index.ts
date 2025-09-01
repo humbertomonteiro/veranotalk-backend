@@ -1,9 +1,11 @@
-import { FirebaseCheckoutRepository } from "./FirebaseCheckout.repository";
-import { FirebaseParticipantRepository } from "./FirebaseParticipant.repository";
-import { FirebaseCouponRepository } from "./FirebaseCupon.repository";
+import { FirebaseCheckoutRepository } from "./FirebaseCheckoutRepository";
+import { FirebaseParticipantRepository } from "./FirebaseParticipantRepository";
+import { FirebaseCouponRepository } from "./FirebaseCuponRepository";
+import { FirebaseUserRepository } from "./FirebaseUserRepository";
 
 export {
   FirebaseCheckoutRepository,
   FirebaseParticipantRepository,
   FirebaseCouponRepository,
+  FirebaseUserRepository,
 };

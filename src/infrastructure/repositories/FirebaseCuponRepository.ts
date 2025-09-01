@@ -131,6 +131,53 @@ class FirebaseCouponRepository implements CouponRepository {
     }
   }
 
+  async findAll(): Promise<Coupon[]> {
+    try {
+      const querySnapshot = await getDocs(collection(db, this.collectionName));
+      const coupons: Coupon[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const createdAt = data.createdAt
+          ? new Date(data.createdAt)
+          : new Date();
+        const updatedAt = data.updatedAt
+          ? new Date(data.updatedAt)
+          : new Date();
+        const expiresAt = data.expiresAt ? new Date(data.expiresAt) : undefined;
+        if (isNaN(createdAt.getTime()) || isNaN(updatedAt.getTime())) {
+          console.error(`Invalid date values in document ${doc.id}:`, {
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+            expiresAt: data.expiresAt,
+          });
+          coupons.push(
+            new Coupon({
+              ...data,
+              id: doc.id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              expiresAt,
+            } as CouponProps)
+          );
+        } else {
+          coupons.push(
+            new Coupon({
+              ...data,
+              id: doc.id,
+              createdAt,
+              updatedAt,
+              expiresAt,
+            } as CouponProps)
+          );
+        }
+      });
+      return coupons;
+    } catch (error) {
+      console.error("Error fetching all coupons:", error);
+      throw new Error("Error fetching all coupons");
+    }
+  }
+
   async update(coupon: Coupon): Promise<void> {
     try {
       if (!coupon.id) throw new Error("Coupon ID is required for update");

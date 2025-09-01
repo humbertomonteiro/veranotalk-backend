@@ -307,3 +307,27 @@
 {"checkoutId":"WDgqNTCp4hvLvF70K7B1","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-08-26 19:22:25"}
 {"checkoutId":"WDgqNTCp4hvLvF70K7B1","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-26 19:22:25"}
 {"checkoutId":"WDgqNTCp4hvLvF70K7B1","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-26 19:22:25","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: NNANaHSf3JbYJeIETGcl","timestamp":"2025-08-29 18:48:53"}
+{"level":"info","message":"Checkout manual atualizado com participantes: NNANaHSf3JbYJeIETGcl","timestamp":"2025-08-29 18:48:53"}
+{"checkoutId":"NNANaHSf3JbYJeIETGcl","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-08-29 18:48:53","totalParticipants":1}
+{"checkoutId":"NNANaHSf3JbYJeIETGcl","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-08-29 18:48:57"}
+{"checkoutId":"NNANaHSf3JbYJeIETGcl","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-29 18:48:57"}
+{"checkoutId":"NNANaHSf3JbYJeIETGcl","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-29 18:48:57","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: MYkE2llHMASZDp08zybW","timestamp":"2025-08-31 08:07:09"}
+{"level":"info","message":"Checkout manual atualizado com participantes: MYkE2llHMASZDp08zybW","timestamp":"2025-08-31 08:07:10"}
+{"checkoutId":"MYkE2llHMASZDp08zybW","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-08-31 08:07:10","totalParticipants":1}
+{"checkoutId":"MYkE2llHMASZDp08zybW","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-08-31 08:07:13"}
+{"checkoutId":"MYkE2llHMASZDp08zybW","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-31 08:07:13"}
+{"checkoutId":"MYkE2llHMASZDp08zybW","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-31 08:07:13","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: g4caSfn1qpSYo57kv928","timestamp":"2025-08-31 16:57:39"}
+{"level":"info","message":"Checkout manual atualizado com participantes: g4caSfn1qpSYo57kv928","timestamp":"2025-08-31 16:57:39"}
+{"checkoutId":"g4caSfn1qpSYo57kv928","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-08-31 16:57:39","totalParticipants":1}
+{"checkoutId":"g4caSfn1qpSYo57kv928","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-08-31 16:57:42"}
+{"checkoutId":"g4caSfn1qpSYo57kv928","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-31 16:57:42"}
+{"checkoutId":"g4caSfn1qpSYo57kv928","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-31 16:57:42","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: JXHW8q8CF1RT2QieLwoh","timestamp":"2025-08-31 17:48:37"}
+{"level":"info","message":"Checkout manual atualizado com participantes: JXHW8q8CF1RT2QieLwoh","timestamp":"2025-08-31 17:48:37"}
+{"checkoutId":"JXHW8q8CF1RT2QieLwoh","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-08-31 17:48:37","totalParticipants":1}
+{"checkoutId":"JXHW8q8CF1RT2QieLwoh","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.comm","timestamp":"2025-08-31 17:48:41"}
+{"checkoutId":"JXHW8q8CF1RT2QieLwoh","email":"bertohf5@gmail.comm","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-31 17:48:41"}
+{"checkoutId":"JXHW8q8CF1RT2QieLwoh","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-31 17:48:41","total":1}
