@@ -5,6 +5,7 @@ import {
   participantRoutes,
   checkoutRoutes,
   couponRoutes,
+  transactionRoutes,
 } from "./infrastructure/routes";
 
 import cors from "cors";
@@ -20,6 +21,7 @@ app.use("/users", userRoutes);
 app.use("/participant", participantRoutes);
 app.use("/webhook", checkoutRoutes);
 app.use("/coupons", couponRoutes);
+app.use("/transactions", transactionRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
