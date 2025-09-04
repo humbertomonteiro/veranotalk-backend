@@ -24,17 +24,17 @@ export class CouponService {
     }
   }
 
-  async validateCoupon(code: string): Promise<Coupon | null> {
+  async validateCoupon(code: string): Promise<Coupon> {
     const codeLowerCasw = code.toLowerCase();
     const coupon = await this.couponRepository.findByCode(codeLowerCasw);
     if (!coupon) {
-      return null;
+      throw new Error("Cupom não existe");
     }
     try {
       coupon.isValid();
       return coupon;
     } catch (error) {
-      return null;
+      throw new Error(`${error}`);
     }
   }
 

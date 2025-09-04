@@ -123,7 +123,7 @@ export class Coupon {
   }
 
   public isExhausted(): boolean {
-    return this.props.maxUses !== undefined
+    return this.props.maxUses !== undefined && this.props.maxUses !== null
       ? this.props.uses >= this.props.maxUses
       : false;
   }
