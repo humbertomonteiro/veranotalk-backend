@@ -8,6 +8,7 @@ export class CouponService {
     try {
       const processedData: CouponProps = {
         ...couponData,
+        code: couponData.code.toLowerCase(),
         expiresAt: couponData.expiresAt
           ? new Date(couponData.expiresAt)
           : undefined,
