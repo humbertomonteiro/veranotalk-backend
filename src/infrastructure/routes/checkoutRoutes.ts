@@ -25,7 +25,8 @@ const createCheckout = new CreateCheckoutUseCase(
 );
 const createManualCheckout = new CreateManualCheckoutUseCase(
   checkoutRepository,
-  participantRepository
+  participantRepository,
+  couponRepository
 );
 const webhookMercadoPago = new WebhookMercadoPagoUseCase(
   checkoutRepository,

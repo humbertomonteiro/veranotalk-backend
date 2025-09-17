@@ -4,10 +4,12 @@ import {
   CheckoutStatus,
   Participant,
   ParticipantProps,
+  Coupon,
 } from "../../entities";
 import {
   CheckoutRepository,
   ParticipantRepository,
+  CouponRepository,
 } from "../../interfaces/repositories";
 import { InternalServerError, ValidationError } from "../../../utils/errors";
 import { sendConfirmationEmail } from "../../../utils/sendEmail.utils";
@@ -23,8 +25,16 @@ interface CreateManualCheckoutInput {
     | "mercadoPagoId"
     | "mercadoPagoPreferenceId"
   > & {
-    paymentMethod: "pix" | "credit_card" | "boleto" | "debit_card";
+    paymentMethod:
+      | "pix"
+      | "credit_card"
+      | "boleto"
+      | "debit_card"
+      | "cash"
+      | "transfer"
+      | "other";
     installments?: number;
+    couponCode?: string;
   };
 }
 
@@ -38,7 +48,8 @@ interface CreateManualCheckoutOutput {
 export class CreateManualCheckoutUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
-    private participantRepository: ParticipantRepository
+    private participantRepository: ParticipantRepository,
+    private couponRepository: CouponRepository
   ) {}
 
   async execute(
@@ -67,17 +78,43 @@ export class CreateManualCheckoutUseCase {
         );
       }
 
-      // Calcular o valor total
-      const totalAmount = this.calculateTotalAmount(
+      // Calcular o valor total antes do desconto
+      const originalAmount = this.calculateTotalAmount(
         input.checkout.fullTickets,
         input.checkout.halfTickets || 0
       );
+
+      // Validar e aplicar cupom, se fornecido
+      let totalAmount = originalAmount;
+      let discountAmount = 0;
+      let coupon: Coupon | null = null;
+      if (input.checkout.couponCode) {
+        coupon = await this.couponRepository.findByCode(
+          input.checkout.couponCode
+        );
+        if (!coupon) {
+          throw new ValidationError("Cupom inválido");
+        }
+        coupon.isValid(input.checkout.metadata?.eventId);
+        // Calculate discount to match frontend logic
+        if (coupon.discountType === "fixed") {
+          discountAmount = coupon.discountValue * input.checkout.fullTickets;
+        } else if (coupon.discountType === "percentage") {
+          discountAmount = originalAmount * (coupon.discountValue / 100);
+        }
+        totalAmount = Math.max(0, originalAmount - discountAmount);
+        // coupon.incrementUses();
+        // await this.couponRepository.update(coupon);
+      }
 
       // Criar checkout manual (já aprovado)
       const checkoutProps: CheckoutProps = {
         ...input.checkout,
         status: "approved" as CheckoutStatus,
         totalAmount,
+        originalAmount,
+        discountAmount,
+        couponCode: coupon?.code || null,
         paymentMethod: input.checkout.paymentMethod,
         metadata: {
           participantIds: [],

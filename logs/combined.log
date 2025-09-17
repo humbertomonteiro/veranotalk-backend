@@ -331,3 +331,12 @@
 {"checkoutId":"JXHW8q8CF1RT2QieLwoh","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.comm","timestamp":"2025-08-31 17:48:41"}
 {"checkoutId":"JXHW8q8CF1RT2QieLwoh","email":"bertohf5@gmail.comm","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-08-31 17:48:41"}
 {"checkoutId":"JXHW8q8CF1RT2QieLwoh","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-08-31 17:48:41","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: JsZTXC8Gtmb1HgPN2WLf","timestamp":"2025-09-17 09:39:16"}
+{"level":"info","message":"Checkout manual atualizado com participantes: JsZTXC8Gtmb1HgPN2WLf","timestamp":"2025-09-17 09:39:16"}
+{"checkoutId":"JsZTXC8Gtmb1HgPN2WLf","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-09-17 09:39:16","totalParticipants":1}
+{"checkoutId":"JsZTXC8Gtmb1HgPN2WLf","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-09-17 09:39:20"}
+{"checkoutId":"JsZTXC8Gtmb1HgPN2WLf","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-09-17 09:39:20"}
+{"checkoutId":"JsZTXC8Gtmb1HgPN2WLf","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-09-17 09:39:20","total":1}
+{"error":"Cannot read properties of undefined (reading 'findByCode')","level":"error","message":"Erro no CreateManualCheckoutUseCase:","timestamp":"2025-09-17 09:54:06"}
+{"error":"Cannot read properties of undefined (reading 'findByCode')","level":"error","message":"Erro no CreateManualCheckoutUseCase:","timestamp":"2025-09-17 09:54:33"}
+{"error":"Cannot read properties of undefined (reading 'findByCode')","level":"error","message":"Erro no CreateManualCheckoutUseCase:","timestamp":"2025-09-17 09:56:02"}
