@@ -11,12 +11,14 @@ import {
   FirebaseCheckoutRepository,
   FirebaseParticipantRepository,
   FirebaseCouponRepository,
+  FirebaseUserRepository,
 } from "../repositories";
 
 const router = Router();
 const checkoutRepository = new FirebaseCheckoutRepository();
 const participantRepository = new FirebaseParticipantRepository();
 const couponRepository = new FirebaseCouponRepository();
+const userRepository = new FirebaseUserRepository();
 
 const createCheckout = new CreateCheckoutUseCase(
   checkoutRepository,
@@ -26,7 +28,8 @@ const createCheckout = new CreateCheckoutUseCase(
 const createManualCheckout = new CreateManualCheckoutUseCase(
   checkoutRepository,
   participantRepository,
-  couponRepository
+  couponRepository,
+  userRepository
 );
 const webhookMercadoPago = new WebhookMercadoPagoUseCase(
   checkoutRepository,

@@ -11,6 +11,13 @@ export interface UserProps {
   createdAt?: Date;
   updatedAt?: Date;
   lastLogin?: Date;
+  valueSold?: number;
+  transfers?: {
+    id: string;
+    value: number;
+    status: "sent" | "accepted" | "rejected";
+    createdAt: Date;
+  }[];
 }
 
 export class User {
@@ -59,6 +66,12 @@ export class User {
   }
   get lastLogin(): Date | undefined {
     return this.props.lastLogin;
+  }
+  get valueSold() {
+    return this.props.valueSold;
+  }
+  get transfers() {
+    return this.props.transfers;
   }
 
   // Métodos de negócio

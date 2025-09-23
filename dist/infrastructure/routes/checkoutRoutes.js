@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkoutRoutes = void 0;
+const express_1 = require("express");
+const services_1 = require("../http/services");
+const usecases_1 = require("../../domain/usecases");
+const controllers_1 = require("../http/controllers");
+const repositories_1 = require("../repositories");
+const router = (0, express_1.Router)();
+exports.checkoutRoutes = router;
+const checkoutRepository = new repositories_1.FirebaseCheckoutRepository();
+const participantRepository = new repositories_1.FirebaseParticipantRepository();
+const couponRepository = new repositories_1.FirebaseCouponRepository();
+const userRepository = new repositories_1.FirebaseUserRepository();
+const createCheckout = new usecases_1.CreateCheckoutUseCase(checkoutRepository, participantRepository, couponRepository);
+const createManualCheckout = new usecases_1.CreateManualCheckoutUseCase(checkoutRepository, participantRepository, couponRepository, userRepository);
+const webhookMercadoPago = new usecases_1.WebhookMercadoPagoUseCase(checkoutRepository, participantRepository, couponRepository);
+const deleteCheckout = new usecases_1.DeleteCheckoutUseCase(checkoutRepository, participantRepository);
+const checkoutService = new services_1.CheckoutService(createCheckout, createManualCheckout, webhookMercadoPago, checkoutRepository, deleteCheckout);
+const controller = new controllers_1.CheckoutController(checkoutService);
+router.post("/", controller.createCheckout.bind(controller));
+router.post("/manual", controller.createManualCheckout.bind(controller));
+router.post("/mercadopago", controller.handleWebhook.bind(controller));
+router.delete("/:id", controller.deleteCheckout.bind(controller));
+router.get("/:id", controller.getCheckoutById.bind(controller));
+//# sourceMappingURL=checkoutRoutes.js.map

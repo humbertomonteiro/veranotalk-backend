@@ -122,7 +122,7 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<void> {
     try {
       const { uid } = req.params;
-      const { name, role, permissions, isActive } = req.body;
+      const { name, role, permissions, isActive, transfers } = req.body;
       if (!name && !role && !permissions && !isActive) {
         res.status(400).json({
           error:
@@ -135,6 +135,7 @@ export class UserController {
         role,
         permissions,
         isActive,
+        transfers,
       });
       res.status(200).json("update success");
     } catch (error) {

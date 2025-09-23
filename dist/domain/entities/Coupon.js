@@ -83,7 +83,7 @@ class Coupon {
         return this.props.expiresAt ? new Date() > this.props.expiresAt : false;
     }
     isExhausted() {
-        return this.props.maxUses !== undefined
+        return this.props.maxUses !== undefined && this.props.maxUses !== null
             ? this.props.uses >= this.props.maxUses
             : false;
     }

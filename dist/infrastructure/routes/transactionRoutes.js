@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.transactionRoutes = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../http/controllers");
+const services_1 = require("../http/services");
+const repositories_1 = require("../repositories");
+const router = (0, express_1.Router)();
+exports.transactionRoutes = router;
+const transactionService = new services_1.TransactionService(new repositories_1.FirebaseTransactionRepository());
+const controller = new controllers_1.TransactionController(transactionService);
+router.post("", controller.createTransaction.bind(controller));
+router.get("/:id", controller.getTransactionById.bind(controller));
+router.put("/:id", controller.updateTransaction.bind(controller));
+router.delete("/:id", controller.deleteTransaction.bind(controller));
+router.get("", controller.getAllTransactions.bind(controller));
+router.get("/category/:category", controller.getTransactionsByCategory.bind(controller));
+router.get("/period", controller.getTransactionsByPeriod.bind(controller));
+router.get("/cashflow/summary", controller.getCashFlowSummary.bind(controller));
+router.get("/cashflow/period", controller.getCashFlowByPeriod.bind(controller));
+//# sourceMappingURL=transactionRoutes.js.map

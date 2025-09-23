@@ -18,6 +18,9 @@ class User {
     get uid() {
         return this.props.uid;
     }
+    get status() {
+        return this.props.status;
+    }
     get email() {
         return this.props.email;
     }
@@ -41,6 +44,12 @@ class User {
     }
     get lastLogin() {
         return this.props.lastLogin;
+    }
+    get valueSold() {
+        return this.props.valueSold;
+    }
+    get transfers() {
+        return this.props.transfers;
     }
     // Métodos de negócio
     updateLastLogin() {

@@ -5,11 +5,14 @@ import {
   Participant,
   ParticipantProps,
   Coupon,
+  UserProps,
+  User,
 } from "../../entities";
 import {
   CheckoutRepository,
   ParticipantRepository,
   CouponRepository,
+  UserRepository,
 } from "../../interfaces/repositories";
 import { InternalServerError, ValidationError } from "../../../utils/errors";
 import { sendConfirmationEmail } from "../../../utils/sendEmail.utils";
@@ -36,6 +39,7 @@ interface CreateManualCheckoutInput {
     installments?: number;
     couponCode?: string;
   };
+  userId?: string;
 }
 
 interface CreateManualCheckoutOutput {
@@ -49,7 +53,8 @@ export class CreateManualCheckoutUseCase {
   constructor(
     private checkoutRepository: CheckoutRepository,
     private participantRepository: ParticipantRepository,
-    private couponRepository: CouponRepository
+    private couponRepository: CouponRepository,
+    private userRepository: UserRepository
   ) {}
 
   async execute(
@@ -130,6 +135,26 @@ export class CreateManualCheckoutUseCase {
 
       // Atualizar checkout com ID
       checkout = new Checkout({ ...checkoutProps, id: checkoutId });
+
+      if (input.userId) {
+        const user = await this.userRepository.findById(input.userId);
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        let valueSold = user?.valueSold;
+
+        const updatedUserProps = {
+          ...user?.toDTO(),
+          valueSold: valueSold ? (valueSold += totalAmount) : totalAmount,
+        };
+
+        const updatedUser = new User(updatedUserProps);
+        await this.userRepository.update(updatedUser);
+      } else {
+        console.log("UserId not found:" + input.userId);
+      }
 
       // Criar e salvar participantes com checkoutId
       const participants = input.participants.map(

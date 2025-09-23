@@ -32,9 +32,9 @@ export class CheckoutController {
     try {
       const input: CreateManualCheckoutInput = req.body;
 
-      if (!input.participants || !input.checkout) {
+      if (!input.participants || !input.checkout || !input.userId) {
         res.status(400).json({
-          error: "Dados de participantes e checkout são obrigatórios",
+          error: "Dados de participantes, userId e checkout são obrigatórios",
         });
         return;
       }
