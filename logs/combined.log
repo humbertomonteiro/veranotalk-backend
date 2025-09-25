@@ -412,3 +412,9 @@
 {"checkoutId":"tHBAnBY4k0h3TQwjKKqS","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para fsantiago369@gmail.co","timestamp":"2025-09-23 11:02:26"}
 {"checkoutId":"tHBAnBY4k0h3TQwjKKqS","email":"fsantiago369@gmail.co","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-09-23 11:02:26"}
 {"checkoutId":"tHBAnBY4k0h3TQwjKKqS","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-09-23 11:02:26","total":1}
+{"level":"info","message":"Checkout manual salvo com ID: 3IGpkOirF7JTUwCUVS5b","timestamp":"2025-09-24 21:15:57"}
+{"level":"info","message":"Checkout manual atualizado com participantes: 3IGpkOirF7JTUwCUVS5b","timestamp":"2025-09-24 21:15:58"}
+{"checkoutId":"3IGpkOirF7JTUwCUVS5b","level":"info","message":"Iniciando envio de emails de confirmação","timestamp":"2025-09-24 21:15:58","totalParticipants":1}
+{"checkoutId":"3IGpkOirF7JTUwCUVS5b","eventName":"verano-talk-2025","level":"info","message":"E-mail enviado para bertohf5@gmail.com","timestamp":"2025-09-24 21:16:02"}
+{"checkoutId":"3IGpkOirF7JTUwCUVS5b","email":"bertohf5@gmail.com","level":"info","message":"E-mail de confirmação enviado com sucesso","timestamp":"2025-09-24 21:16:02"}
+{"checkoutId":"3IGpkOirF7JTUwCUVS5b","failed":0,"level":"info","message":"Resumo do envio de emails","successful":1,"timestamp":"2025-09-24 21:16:02","total":1}

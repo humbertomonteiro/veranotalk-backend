@@ -41,7 +41,7 @@ export async function sendConfirmationEmail(
         <tr>
           <td style="padding: 30px;">
             <p style="font-size: 16px; color: #333333; margin: 0 0 15px;">Olá, <strong>${participant.name}</strong>,</p>
-            <p style="font-size: 16px; color: #333333; margin: 0 0 15px;">Seu pagamento para o evento <strong style="color: #ddd3c3; position: relative; text-decoration: none; border-bottom: 2px solid #ddd3c3;">${eventName}</strong> foi aprovado com sucesso!</p>
+            <p style="font-size: 16px; color: #333333; margin: 0 0 15px;">Seu pagamento para o evento <strong style="color: #ffffff; position: relative; text-decoration: none; border-bottom: 2px solid #ddd3c3;">${eventName}</strong> foi aprovado com sucesso!</p>
             <p style="font-size: 16px; color: #333333; margin: 0 0 15px;"><strong>Checkout ID:</strong> ${checkout.id}</p>
             <p style="font-size: 16px; color: #333333; margin: 0 0 20px;">Acesse a <strong>Área do Participante</strong> para visualizar seu ingresso, receber atualizações do evento, informações importantes e gerenciar sua participação.</p>
             <!-- Botão -->
@@ -59,7 +59,7 @@ export async function sendConfirmationEmail(
         <tr>
           <td style="padding: 20px; text-align: center; background-color: rgba(102, 75, 49, 0.1);">
             <p style="font-size: 14px; color: #333333; margin: 0;">São Luís - Maranhão</p>
-            <p style="font-size: 14px; color: #333333; margin: 5px 0 0;">16/10/2025 - Das 09h às 21h</p>
+            <p style="font-size: 14px; color: #333333; margin: 5px 0 0;">01/11/2025 - Das 09h às 21h</p>
           </td>
         </tr>
         <!-- Rodapé -->
