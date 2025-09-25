@@ -60,30 +60,21 @@ export class CreateCheckoutUseCase {
         throw new ValidationError("Pelo menos um participante é obrigatório");
       }
 
-      // Validar número mínimo de ingressos para lote 2
-      if (
-        input.checkout.metadata?.ticketType === "2" &&
-        input.checkout.fullTickets < 5
-      ) {
-        throw new ValidationError("Mínimo de 5 ingressos para o lote de grupo");
-      }
-
-      // Calcular o valor total antes do desconto
+      // Calculate total amount before discount
       const originalAmount = this.calculateTotalAmount(
         input.checkout.fullTickets,
-        input.checkout.halfTickets,
-        input.checkout.metadata?.ticketType
+        input.checkout.halfTickets
       );
 
-      // Validar e aplicar cupom, se fornecido
+      // Validate and apply coupon, if provided
       let totalAmount = originalAmount;
       let discountAmount = 0;
       let coupon: Coupon | null = null;
       if (input.checkout.couponCode) {
-        // Proibir cupons para 5 ou mais ingressos
-        if (input.checkout.fullTickets >= 5) {
+        // Prohibit coupons for more than 1 ticket
+        if (input.checkout.fullTickets > 1) {
           throw new ValidationError(
-            "Cupons não são permitidos para 5 ou mais ingressos"
+            "Cupons são permitidos apenas para 1 ingresso"
           );
         }
         coupon = await this.couponRepository.findByCode(
@@ -95,16 +86,14 @@ export class CreateCheckoutUseCase {
         coupon.isValid(input.checkout.metadata?.eventId);
         // Calculate discount to match frontend logic
         if (coupon.discountType === "fixed") {
-          discountAmount = coupon.discountValue * input.checkout.fullTickets;
+          discountAmount = coupon.discountValue;
         } else if (coupon.discountType === "percentage") {
           discountAmount = originalAmount * (coupon.discountValue / 100);
         }
         totalAmount = Math.max(0, originalAmount - discountAmount);
-        // coupon.incrementUses();
-        // await this.couponRepository.update(coupon);
       }
 
-      // Criar checkout com informações do cupom
+      // Create checkout with coupon information
       const checkoutProps: CheckoutProps = {
         ...input.checkout,
         status: "pending",
@@ -115,17 +104,17 @@ export class CreateCheckoutUseCase {
         metadata: {
           participantIds: [],
           eventId: input.checkout.metadata?.eventId || "verano-talk-2025",
-          ticketType: input.checkout.metadata?.ticketType || "1",
+          ticketType: input.checkout.metadata?.ticketType || "all",
         },
       };
       checkout = new Checkout(checkoutProps);
       checkoutId = await this.checkoutRepository.save(checkout);
       console.log(`Checkout salvo com ID: ${checkoutId}`);
 
-      // Atualizar checkout com ID
+      // Update checkout with ID
       checkout = new Checkout({ ...checkoutProps, id: checkoutId });
 
-      // Criar e salvar participantes com checkoutId
+      // Create and save participants with checkoutId
       const participants = input.participants.map(
         (props) =>
           new Participant({
@@ -144,13 +133,13 @@ export class CreateCheckoutUseCase {
         participantIds.push(participantId);
       }
 
-      // Atualizar checkout com participantIds
+      // Update checkout with participantIds
       checkout.addParticipants(participantIds);
       checkout.startProcessing();
       await this.checkoutRepository.update(checkout);
       console.log(`Checkout atualizado para processing: ${checkoutId}`);
 
-      // Criar preferência de pagamento no Mercado Pago
+      // Create payment preference in Mercado Pago
       const preference = {
         items: [
           {
@@ -192,7 +181,7 @@ export class CreateCheckoutUseCase {
         );
       }
 
-      // Atualizar checkout com Mercado Pago ID
+      // Update checkout with Mercado Pago ID
       checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
       await this.checkoutRepository.update(checkout);
       console.log(
@@ -224,19 +213,17 @@ export class CreateCheckoutUseCase {
 
   private calculateTotalAmount(
     fullTickets: number,
-    halfTickets: number,
-    ticketType?: string
+    halfTickets: number
+    // ticketType?: string
   ) {
-    const basePrice =
-      fullTickets >= 5
-        ? 399
-        : ticketType === "1"
-        ? 499
-        : ticketType === "2"
-        ? 399
-        : ticketType === "3"
-        ? 799
-        : 499;
+    let basePrice: number;
+    if (fullTickets >= 5) {
+      basePrice = 355;
+    } else if (fullTickets >= 2) {
+      basePrice = 399;
+    } else {
+      basePrice = fullTickets >= 5 ? 355 : fullTickets >= 2 ? 399 : 499;
+    }
     const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
     return fullTickets * basePrice + halfTickets * valueTicketHalf;
   }

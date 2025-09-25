@@ -30,21 +30,16 @@ class CreateCheckoutUseCase {
             if (!input.participants.length) {
                 throw new errors_1.ValidationError("Pelo menos um participante é obrigatório");
             }
-            // Validar número mínimo de ingressos para lote 2
-            if (input.checkout.metadata?.ticketType === "2" &&
-                input.checkout.fullTickets < 5) {
-                throw new errors_1.ValidationError("Mínimo de 5 ingressos para o lote de grupo");
-            }
-            // Calcular o valor total antes do desconto
-            const originalAmount = this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets, input.checkout.metadata?.ticketType);
-            // Validar e aplicar cupom, se fornecido
+            // Calculate total amount before discount
+            const originalAmount = this.calculateTotalAmount(input.checkout.fullTickets, input.checkout.halfTickets);
+            // Validate and apply coupon, if provided
             let totalAmount = originalAmount;
             let discountAmount = 0;
             let coupon = null;
             if (input.checkout.couponCode) {
-                // Proibir cupons para 5 ou mais ingressos
-                if (input.checkout.fullTickets >= 5) {
-                    throw new errors_1.ValidationError("Cupons não são permitidos para 5 ou mais ingressos");
+                // Prohibit coupons for more than 1 ticket
+                if (input.checkout.fullTickets > 1) {
+                    throw new errors_1.ValidationError("Cupons são permitidos apenas para 1 ingresso");
                 }
                 coupon = await this.couponRepository.findByCode(input.checkout.couponCode);
                 if (!coupon) {
@@ -53,16 +48,14 @@ class CreateCheckoutUseCase {
                 coupon.isValid(input.checkout.metadata?.eventId);
                 // Calculate discount to match frontend logic
                 if (coupon.discountType === "fixed") {
-                    discountAmount = coupon.discountValue * input.checkout.fullTickets;
+                    discountAmount = coupon.discountValue;
                 }
                 else if (coupon.discountType === "percentage") {
                     discountAmount = originalAmount * (coupon.discountValue / 100);
                 }
                 totalAmount = Math.max(0, originalAmount - discountAmount);
-                // coupon.incrementUses();
-                // await this.couponRepository.update(coupon);
             }
-            // Criar checkout com informações do cupom
+            // Create checkout with coupon information
             const checkoutProps = {
                 ...input.checkout,
                 status: "pending",
@@ -73,15 +66,15 @@ class CreateCheckoutUseCase {
                 metadata: {
                     participantIds: [],
                     eventId: input.checkout.metadata?.eventId || "verano-talk-2025",
-                    ticketType: input.checkout.metadata?.ticketType || "1",
+                    ticketType: input.checkout.metadata?.ticketType || "all",
                 },
             };
             checkout = new entities_1.Checkout(checkoutProps);
             checkoutId = await this.checkoutRepository.save(checkout);
             console.log(`Checkout salvo com ID: ${checkoutId}`);
-            // Atualizar checkout com ID
+            // Update checkout with ID
             checkout = new entities_1.Checkout({ ...checkoutProps, id: checkoutId });
-            // Criar e salvar participantes com checkoutId
+            // Create and save participants with checkoutId
             const participants = input.participants.map((props) => new entities_1.Participant({
                 ...props,
                 eventId: props.eventId || "verano-talk-2025",
@@ -93,12 +86,12 @@ class CreateCheckoutUseCase {
                 const participantId = await this.participantRepository.save(participant);
                 participantIds.push(participantId);
             }
-            // Atualizar checkout com participantIds
+            // Update checkout with participantIds
             checkout.addParticipants(participantIds);
             checkout.startProcessing();
             await this.checkoutRepository.update(checkout);
             console.log(`Checkout atualizado para processing: ${checkoutId}`);
-            // Criar preferência de pagamento no Mercado Pago
+            // Create payment preference in Mercado Pago
             const preference = {
                 items: [
                     {
@@ -129,7 +122,7 @@ class CreateCheckoutUseCase {
                 await this.checkoutRepository.update(checkout);
                 throw new errors_1.InternalServerError("Resposta do Mercado Pago inválida: init_point ou id ausente");
             }
-            // Atualizar checkout com Mercado Pago ID
+            // Update checkout with Mercado Pago ID
             checkout.setMercadoPagoPreferenceId(preferenceResponse.id);
             await this.checkoutRepository.update(checkout);
             console.log(`Checkout atualizado com mercadoPagoPreferenceId: ${preferenceResponse.id}`);
@@ -154,16 +147,19 @@ class CreateCheckoutUseCase {
                 : new errors_1.InternalServerError("Falha ao criar checkout");
         }
     }
-    calculateTotalAmount(fullTickets, halfTickets, ticketType) {
-        const basePrice = fullTickets >= 5
-            ? 399
-            : ticketType === "1"
-                ? 499
-                : ticketType === "2"
-                    ? 399
-                    : ticketType === "3"
-                        ? 799
-                        : 499;
+    calculateTotalAmount(fullTickets, halfTickets
+    // ticketType?: string
+    ) {
+        let basePrice;
+        if (fullTickets >= 5) {
+            basePrice = 355;
+        }
+        else if (fullTickets >= 2) {
+            basePrice = 399;
+        }
+        else {
+            basePrice = fullTickets >= 5 ? 355 : fullTickets >= 2 ? 399 : 499;
+        }
         const valueTicketHalf = Number(process.env.HALF_TICKET_PRICE) || 249.5;
         return fullTickets * basePrice + halfTickets * valueTicketHalf;
     }
