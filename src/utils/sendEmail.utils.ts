@@ -59,7 +59,7 @@ export async function sendConfirmationEmail(
         <tr>
           <td style="padding: 20px; text-align: center; background-color: rgba(102, 75, 49, 0.1);">
             <p style="font-size: 14px; color: #333333; margin: 0;">São Luís - Maranhão</p>
-            <p style="font-size: 14px; color: #333333; margin: 5px 0 0;">01/11/2025 - Das 09h às 21h</p>
+            <p style="font-size: 14px; color: #333333; margin: 5px 0 0;">21/03/2026 - Das 09h às 21h</p>
           </td>
         </tr>
         <!-- Rodapé -->
