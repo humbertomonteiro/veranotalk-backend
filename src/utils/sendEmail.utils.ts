@@ -82,7 +82,7 @@ Olá ${participant.name},
 Seu pagamento para o evento ${eventName} foi aprovado!
 
 Checkout ID: ${checkout.id}
-Evento: São Luís - Maranhão, 16/10/2025 - Das 09h às 20h
+Evento: São Luís - Maranhão, 21/03/2026 - Das 09h às 20h
 
 Acesse a Área do Participante para visualizar seu ingresso, atualizações do evento e informações importantes: ${participantAreaUrl}
 
